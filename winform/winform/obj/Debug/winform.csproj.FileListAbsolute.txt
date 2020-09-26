@@ -1,0 +1,11 @@
+C:\Users\chien\source\repos\winform\winform\bin\Debug\winform.exe.config
+C:\Users\chien\source\repos\winform\winform\bin\Debug\winform.exe
+C:\Users\chien\source\repos\winform\winform\bin\Debug\winform.pdb
+C:\Users\chien\source\repos\winform\winform\obj\Debug\winform.csprojAssemblyReference.cache
+C:\Users\chien\source\repos\winform\winform\obj\Debug\winform.Form1.resources
+C:\Users\chien\source\repos\winform\winform\obj\Debug\winform.Properties.Resources.resources
+C:\Users\chien\source\repos\winform\winform\obj\Debug\winform.csproj.GenerateResource.cache
+C:\Users\chien\source\repos\winform\winform\obj\Debug\winform.csproj.CoreCompileInputs.cache
+C:\Users\chien\source\repos\winform\winform\obj\Debug\winform.exe
+C:\Users\chien\source\repos\winform\winform\obj\Debug\winform.pdb
+C:\Users\chien\source\repos\winform\winform\obj\Debug\winform.Main.resources
