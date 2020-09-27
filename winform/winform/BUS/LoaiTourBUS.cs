@@ -10,7 +10,7 @@ namespace winform.BUS
 {
     public class LoaiTourBUS
     {
-        public List<LoaiTourDTO> getAll()
+        public static List<LoaiTourDTO> getAll()
         {
             return LoaiTourDAO.getAll();
         }

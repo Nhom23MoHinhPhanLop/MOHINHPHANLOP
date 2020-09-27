@@ -15,7 +15,7 @@ namespace winform.DAO
 
             return new List<ChiTietTourDTO>();
         }
-        public static  void insert(ChiTietTourDTO chiTietTour)
+        public static void insert(ChiTietTourDTO chiTietTour)
         {
 
         }
@@ -25,7 +25,7 @@ namespace winform.DAO
         }
         public static void delete(String matour, String madiadiem)
         {
-            
+
         }
     }
 }

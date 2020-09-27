@@ -25,8 +25,8 @@ namespace winform.BUS
         public void delete(String matour, String madiadiem)
         {
             //xóa 1 chi tiết 
-            ChiTietTourDAO.delete(matour,madiadiem);
+            ChiTietTourDAO.delete(matour, madiadiem);
         }
-       
+
     }
 }

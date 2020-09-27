@@ -11,7 +11,17 @@ namespace winform.DTO
         String madiadiem;
         String tendiadiem;
 
-        public string Madiadiem { get => madiadiem; set => madiadiem = value; }
-        public string Tendiadiem { get => tendiadiem; set => tendiadiem = value; }
+        public DiaDiemDTO(string madiadiem, string tendiadiem)
+        {
+            this.madiadiem = madiadiem;
+            this.tendiadiem = tendiadiem;
+        }
+
+        public String Madiadiem { get => madiadiem; set => madiadiem = value; }
+        public String Tendiadiem { get => tendiadiem; set => tendiadiem = value; }
+        public String toString()
+        {
+            return this.Tendiadiem;
+        }
     }
 }

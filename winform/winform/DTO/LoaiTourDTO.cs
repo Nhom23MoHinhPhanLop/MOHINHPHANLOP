@@ -11,7 +11,17 @@ namespace winform.DTO
         String maloai;
         String tenloai;
 
-        public string Tenloai { get => tenloai; set => tenloai = value; }
-        public string Maloai { get => maloai; set => maloai = value; }
+        public LoaiTourDTO(string maloai, string tenloai)
+        {
+            this.maloai = maloai;
+            this.tenloai = tenloai;
+        }
+
+        public String Maloai { get => maloai; set => maloai = value; }
+        public String Tenloai { get => tenloai; set => tenloai = value; }
+        public String toString()
+        {
+            return this.Tenloai;
+        }
     }
 }

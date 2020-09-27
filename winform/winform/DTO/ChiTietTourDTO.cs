@@ -13,6 +13,13 @@ namespace winform.DTO
         String madiadiem;
         String tt;
 
+        public ChiTietTourDTO(string matour, string madiadiem, string tt)
+        {
+            this.matour = matour;
+            this.madiadiem = madiadiem;
+            this.tt = tt;
+        }
+
         public string Matour { get => matour; set => matour = value; }
         public string Madiadiem { get => madiadiem; set => madiadiem = value; }
         public string Tt { get => tt; set => tt = value; }

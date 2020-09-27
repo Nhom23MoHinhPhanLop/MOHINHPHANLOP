@@ -12,7 +12,7 @@ namespace winform
     {
         SqlConnection connect;
 
-       public Connection()
+        public Connection()
         {
             try
             {
@@ -29,10 +29,14 @@ namespace winform
                 MessageBox.Show(e.Message, "Lỗi kết nối sql server", MessageBoxButtons.OK);
             }
         }
+        public SqlConnection getConnection()
+        {
+            return connect;
+        }
         public void open()
         {
             connect.Open();
-        }    
+        }
         public void close()
         {
             connect.Close();

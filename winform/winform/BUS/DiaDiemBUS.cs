@@ -10,7 +10,7 @@ namespace winform.BUS
 {
     public class DiaDiemBUS
     {
-        public List<DiaDiemDTO> getAll()
+        public static List<DiaDiemDTO> getAll()
         {
             return DiaDiemDAO.getAll();
         }

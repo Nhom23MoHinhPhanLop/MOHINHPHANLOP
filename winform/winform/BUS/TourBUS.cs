@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,22 +11,22 @@ namespace winform.BUS
 {
     public class TourBUS
     {
-        public  List<TourDTO> getAllTour()
+        public static DataTable getAllTour()
         {
             return TourDAO.getAllTours();
         }
-        public  void delete(String matour)
+        public void delete(String matour)
         {
             TourDAO.delete(matour);
         }
-        public Boolean isTourExists(String matour)
+        public static Boolean isTourExists(String matour)
         {
             return TourDAO.isTourExists(matour);
         }
 
-        public void insert(TourDTO tour)
+        public static void insert(TourDTO tour)
         {
-            if(!isTourExists(tour.Matour))
+            if (!isTourExists(tour.Matour))
             {
                 TourDAO.insert(tour);
             }
@@ -35,12 +36,12 @@ namespace winform.BUS
             }
         }
 
-        public void update(TourDTO tour)
+        public static void update(TourDTO tour)
         {
             TourDAO.update(tour);
         }
 
-        public TourDTO getTourById(String matour)
+        public static TourDTO getTourById(String matour)
         {
             return TourDAO.getTourById(matour);
         }
