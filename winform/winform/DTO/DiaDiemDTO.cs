@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace winform
+namespace winform.DTO
 {
-    public class DiaDiem
+    public class DiaDiemDTO
     {
         String madiadiem;
         String tendiadiem;

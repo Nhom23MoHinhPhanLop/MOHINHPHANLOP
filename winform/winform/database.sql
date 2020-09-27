@@ -42,7 +42,9 @@ go
 create table CHITIETTOUR(
 	tt nvarchar(500) default N'Không có gì hết',
 	matour char(10) foreign key references TOUR(matour),
-	madiadiem char(10) foreign key references DIADIEM(madiadiem)
+	madiadiem char(10) foreign key references DIADIEM(madiadiem),
+	CONSTRAINT fk_chiTietTour PRIMARY KEY (matour,madiadiem)	
+
 )
 go
 

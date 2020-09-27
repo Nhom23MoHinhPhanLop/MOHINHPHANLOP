@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace winform
+namespace winform.DTO
 {
-    public class Tour
+    public class TourDTO
     {
         String matour;
         String tentour;

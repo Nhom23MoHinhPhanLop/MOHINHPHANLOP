@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace winform
+namespace winform.DTO
 {
-    public class Gia
+    public class GiaDTO
     {
         String magia;
         Double gia;

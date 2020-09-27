@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace winform
+namespace winform.DTO
 {
-    class ChiTietTour
+    public class ChiTietTourDTO
     {
         String matour;
         String madiadiem;

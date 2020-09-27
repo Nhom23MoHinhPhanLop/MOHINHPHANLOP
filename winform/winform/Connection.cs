@@ -22,15 +22,20 @@ namespace winform
                     "Initial Catalog=QLTOUR;" +
                     "User id=sa;" +
                     "Password=sa;";
-                connect.Open();
-                MessageBox.Show("ok", "ok", MessageBoxButtons.OK);
-
             }
             catch (Exception e)
             {
 
-                MessageBox.Show(e.Message,"loi",MessageBoxButtons.OK); 
+                MessageBox.Show(e.Message, "Lỗi kết nối sql server", MessageBoxButtons.OK);
             }
+        }
+        public void open()
+        {
+            connect.Open();
+        }    
+        public void close()
+        {
+            connect.Close();
         }
     }
 }

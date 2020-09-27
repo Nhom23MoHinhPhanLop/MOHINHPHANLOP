@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace winform
+namespace winform.DTO
 {
-    public class LoaiTour
+    public class LoaiTourDTO
     {
         String maloai;
         String tenloai;
