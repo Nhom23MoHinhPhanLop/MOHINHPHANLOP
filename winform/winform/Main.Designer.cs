@@ -318,6 +318,7 @@
             this.dataGridViewTour.ReadOnly = true;
             this.dataGridViewTour.Size = new System.Drawing.Size(369, 420);
             this.dataGridViewTour.TabIndex = 0;
+            this.dataGridViewTour.SelectionChanged += new System.EventHandler(this.dataGridViewTour_SelectionChanged);
             // 
             // Main
             // 

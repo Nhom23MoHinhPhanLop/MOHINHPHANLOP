@@ -62,10 +62,10 @@ insert into TOUR values
 go
 insert into GIA (magia,gia,ngayketthuc,matour)values
 	('gia1',100000,'2020-12-12','tour1'),
-	('gia2',100000,'2020-12-12','tour2'),
-	('gia3',100000,'2020-12-12','tour3'),
-	('gia4',100000,'2020-12-12','tour4'),
-	('gia5',100000,'2020-12-12','tour5')
+	('gia2',200000,'2020-12-12','tour2'),
+	('gia3',300000,'2020-12-12','tour3'),
+	('gia4',400000,'2020-12-12','tour4'),
+	('gia5',500000,'2020-12-12','tour5')
 go
 
 insert into DIADIEM values
