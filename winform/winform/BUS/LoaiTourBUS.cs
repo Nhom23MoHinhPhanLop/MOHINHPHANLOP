@@ -14,5 +14,9 @@ namespace winform.BUS
         {
             return LoaiTourDAO.getAll();
         }
+        public static void capnhatLoaiTour(LoaiTourDTO loaiTour)
+        {
+            DAO.LoaiTourDAO.capnhatLoaiTour(loaiTour);
+        }
     }
 }

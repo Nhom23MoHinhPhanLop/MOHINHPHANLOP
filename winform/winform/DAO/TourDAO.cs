@@ -21,7 +21,6 @@ namespace winform.DAO
             DataTable dataTable = new DataTable();
             data.Fill(dataTable);
             connection.close();
-            dataTable.Columns.Remove("maloai");
             return dataTable;
         }
         public static TourDTO getTourById(String matour)

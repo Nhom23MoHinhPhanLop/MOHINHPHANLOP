@@ -11,7 +11,8 @@ namespace winform.DTO
         String matour;
         String tentour;
         String maloai;
-
+        List<ChiTietTourDTO> chiTietTours;
+        List<GiaDTO> DanhSachGia;
         public TourDTO() { }
         public TourDTO(string matour, string tentour, string maloai)
         {

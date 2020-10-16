@@ -33,8 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,21 +64,76 @@
     <Compile Include="DAO\GiaDAO.cs" />
     <Compile Include="DAO\LoaiTourDAO.cs" />
     <Compile Include="DAO\TourDAO.cs" />
+    <Compile Include="DataProvider.cs" />
     <Compile Include="DTO\ChiTietTourDTO.cs" />
     <Compile Include="DTO\DiaDiemDTO.cs" />
     <Compile Include="DTO\GiaDTO.cs" />
     <Compile Include="DTO\LoaiTourDTO.cs" />
-    <Compile Include="Main.cs">
+    <Compile Include="GUI\DiaDiem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
+    <Compile Include="GUI\DiaDiem.Designer.cs">
+      <DependentUpon>DiaDiem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Gia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Gia.Designer.cs">
+      <DependentUpon>Gia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\itemLoaiTour.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\itemLoaiTour.Designer.cs">
+      <DependentUpon>itemLoaiTour.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ThemLoai.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\ThemLoai.Designer.cs">
+      <DependentUpon>ThemLoai.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ThemTour.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\ThemTour.Designer.cs">
+      <DependentUpon>ThemTour.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\trangchu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\trangchu.Designer.cs">
+      <DependentUpon>trangchu.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DTO\TourDTO.cs" />
-    <EmbeddedResource Include="Main.resx">
-      <DependentUpon>Main.cs</DependentUpon>
+    <Compile Include="GUI\ThemDiadiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\ThemDiadiem.Designer.cs">
+      <DependentUpon>ThemDiadiem.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="GUI\DiaDiem.resx">
+      <DependentUpon>DiaDiem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Gia.resx">
+      <DependentUpon>Gia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\itemLoaiTour.resx">
+      <DependentUpon>itemLoaiTour.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\ThemDiadiem.resx">
+      <DependentUpon>ThemDiadiem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\ThemLoai.resx">
+      <DependentUpon>ThemLoai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\ThemTour.resx">
+      <DependentUpon>ThemTour.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\trangchu.resx">
+      <DependentUpon>trangchu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -81,7 +143,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -97,7 +161,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="database.sql" />
+    <None Include="Resources\delete.png" />
+    <None Include="Resources\edit.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

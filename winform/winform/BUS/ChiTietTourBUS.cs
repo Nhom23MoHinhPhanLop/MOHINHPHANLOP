@@ -10,19 +10,19 @@ namespace winform.BUS
 {
     public class ChiTietTourBUS
     {
-        public List<ChiTietTourDTO> getChiTietById(String matour)
+        public static List<ChiTietTourDTO> getTourDetailById(String matour)
         {
-            return ChiTietTourDAO.getChiTietById(matour);
+            return ChiTietTourDAO.getTourDetailById(matour);
         }
-        public void insert(ChiTietTourDTO chiTietTour)
+        public static void insert(ChiTietTourDTO chiTietTour)
         {
             ChiTietTourDAO.insert(chiTietTour);
         }
-        public void update(ChiTietTourDTO chiTietTour)
+        public static  void update(ChiTietTourDTO chiTietTour)
         {
             ChiTietTourDAO.update(chiTietTour);
         }
-        public void delete(String matour, String madiadiem)
+        public static  void delete(String matour, String madiadiem)
         {
             //xóa 1 chi tiết 
             ChiTietTourDAO.delete(matour, madiadiem);

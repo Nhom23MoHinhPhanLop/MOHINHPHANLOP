@@ -16,13 +16,14 @@ namespace winform.DAO
         {
             Connection connection = new Connection();
 
-            String query = "select * from LOAITOUR";
+            String procName = "proc_getTourProgram";
             List<LoaiTourDTO> listLoaiTour = new List<LoaiTourDTO>(5);
 
-            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
+            using (SqlCommand command = new SqlCommand(procName, connection.getConnection()))
             {
 
                 connection.open();
+                command.CommandType = CommandType.StoredProcedure;
                 var reader = command.ExecuteReader();
 
                 while (reader.Read())
@@ -33,6 +34,27 @@ namespace winform.DAO
                 connection.close();
             }
             return listLoaiTour;
+        }
+
+        public static void capnhatLoaiTour(LoaiTourDTO loaiTour)
+        {
+            Connection connection = new Connection();
+
+            String procName = "proc_updateTourProgram";
+
+            using (SqlCommand cmd = new SqlCommand(procName, connection.getConnection()))
+            {
+
+                connection.open();
+
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@maloai", loaiTour.Maloai);
+                cmd.Parameters.AddWithValue("@tenloai", loaiTour.Tenloai);
+
+                cmd.ExecuteNonQuery();
+
+                connection.close();
+            }
         }
     }
 }

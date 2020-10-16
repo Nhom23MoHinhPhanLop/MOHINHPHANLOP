@@ -18,4 +18,13 @@ C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.csproj.CoreCompileInputs.cache
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.exe
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.pdb
-C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.Main.resources
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\bin\Debug\EntityFramework.dll
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\bin\Debug\EntityFramework.xml
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.GUI.ThemTour.resources
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.csproj.CopyComplete
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.GUI.itemLoaiTour.resources
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.GUI.trangchu.resources
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.GUI.ThemLoai.resources
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.ThemDiadiem.resources
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.GUI.DiaDiem.resources
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\winform\obj\Debug\winform.GUI.Gia.resources

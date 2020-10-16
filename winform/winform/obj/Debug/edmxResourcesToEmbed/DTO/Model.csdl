@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QLTOURModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CHITIETTOUR">
+    <Key>
+      <PropertyRef Name="matour" />
+      <PropertyRef Name="madiadiem" />
+    </Key>
+    <Property Name="tt" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="matour" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="madiadiem" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="DIADIEM" Relationship="Self.FK__CHITIETTO__madia__33D4B598" FromRole="CHITIETTOUR" ToRole="DIADIEM" />
+    <NavigationProperty Name="TOUR" Relationship="Self.FK__CHITIETTO__matou__32E0915F" FromRole="CHITIETTOUR" ToRole="TOUR" />
+  </EntityType>
+  <EntityType Name="DIADIEM">
+    <Key>
+      <PropertyRef Name="madiadiem" />
+    </Key>
+    <Property Name="madiadiem" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="tendiadiem" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CHITIETTOURs" Relationship="Self.FK__CHITIETTO__madia__33D4B598" FromRole="DIADIEM" ToRole="CHITIETTOUR" />
+  </EntityType>
+  <EntityType Name="GIA">
+    <Key>
+      <PropertyRef Name="magia" />
+    </Key>
+    <Property Name="magia" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="gia1" Type="Double" Nullable="false" />
+    <Property Name="ngaybatdau" Type="DateTime" Precision="0" />
+    <Property Name="ngayketthuc" Type="DateTime" Precision="0" />
+    <Property Name="matour" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="TOUR" Relationship="Self.FK__GIA__matour__2C3393D0" FromRole="GIA" ToRole="TOUR" />
+  </EntityType>
+  <EntityType Name="LOAITOUR">
+    <Key>
+      <PropertyRef Name="maloai" />
+    </Key>
+    <Property Name="maloai" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="tenloai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TOURs" Relationship="Self.FK__TOUR__maloai__286302EC" FromRole="LOAITOUR" ToRole="TOUR" />
+  </EntityType>
+  <EntityType Name="TOUR">
+    <Key>
+      <PropertyRef Name="matour" />
+    </Key>
+    <Property Name="matour" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="tentour" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="maloai" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="CHITIETTOURs" Relationship="Self.FK__CHITIETTO__matou__32E0915F" FromRole="TOUR" ToRole="CHITIETTOUR" />
+    <NavigationProperty Name="GIAs" Relationship="Self.FK__GIA__matour__2C3393D0" FromRole="TOUR" ToRole="GIA" />
+    <NavigationProperty Name="LOAITOUR" Relationship="Self.FK__TOUR__maloai__286302EC" FromRole="TOUR" ToRole="LOAITOUR" />
+  </EntityType>
+  <Association Name="FK__CHITIETTO__madia__33D4B598">
+    <End Role="DIADIEM" Type="Self.DIADIEM" Multiplicity="1" />
+    <End Role="CHITIETTOUR" Type="Self.CHITIETTOUR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DIADIEM">
+        <PropertyRef Name="madiadiem" />
+      </Principal>
+      <Dependent Role="CHITIETTOUR">
+        <PropertyRef Name="madiadiem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CHITIETTO__matou__32E0915F">
+    <End Role="TOUR" Type="Self.TOUR" Multiplicity="1" />
+    <End Role="CHITIETTOUR" Type="Self.CHITIETTOUR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TOUR">
+        <PropertyRef Name="matour" />
+      </Principal>
+      <Dependent Role="CHITIETTOUR">
+        <PropertyRef Name="matour" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GIA__matour__2C3393D0">
+    <End Role="TOUR" Type="Self.TOUR" Multiplicity="0..1" />
+    <End Role="GIA" Type="Self.GIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TOUR">
+        <PropertyRef Name="matour" />
+      </Principal>
+      <Dependent Role="GIA">
+        <PropertyRef Name="matour" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TOUR__maloai__286302EC">
+    <End Role="LOAITOUR" Type="Self.LOAITOUR" Multiplicity="0..1" />
+    <End Role="TOUR" Type="Self.TOUR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAITOUR">
+        <PropertyRef Name="maloai" />
+      </Principal>
+      <Dependent Role="TOUR">
+        <PropertyRef Name="maloai" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QLTOUREntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CHITIETTOURs" EntityType="Self.CHITIETTOUR" />
+    <EntitySet Name="DIADIEMs" EntityType="Self.DIADIEM" />
+    <EntitySet Name="GIAs" EntityType="Self.GIA" />
+    <EntitySet Name="LOAITOURs" EntityType="Self.LOAITOUR" />
+    <EntitySet Name="TOURs" EntityType="Self.TOUR" />
+    <AssociationSet Name="FK__CHITIETTO__madia__33D4B598" Association="Self.FK__CHITIETTO__madia__33D4B598">
+      <End Role="DIADIEM" EntitySet="DIADIEMs" />
+      <End Role="CHITIETTOUR" EntitySet="CHITIETTOURs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CHITIETTO__matou__32E0915F" Association="Self.FK__CHITIETTO__matou__32E0915F">
+      <End Role="TOUR" EntitySet="TOURs" />
+      <End Role="CHITIETTOUR" EntitySet="CHITIETTOURs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GIA__matour__2C3393D0" Association="Self.FK__GIA__matour__2C3393D0">
+      <End Role="TOUR" EntitySet="TOURs" />
+      <End Role="GIA" EntitySet="GIAs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TOUR__maloai__286302EC" Association="Self.FK__TOUR__maloai__286302EC">
+      <End Role="LOAITOUR" EntitySet="LOAITOURs" />
+      <End Role="TOUR" EntitySet="TOURs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

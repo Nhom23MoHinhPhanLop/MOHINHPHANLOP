@@ -1,0 +1,10 @@
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\bin\Debug\QuanLyTour.exe.config
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\bin\Debug\QuanLyTour.exe
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\bin\Debug\QuanLyTour.pdb
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.csprojAssemblyReference.cache
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.Properties.Resources.resources
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.csproj.GenerateResource.cache
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.csproj.CoreCompileInputs.cache
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.exe
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.pdb
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.GUI.Main.resources
