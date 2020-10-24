@@ -6,15 +6,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using winform;
 
 namespace QuanLyTour.DAO
 {
     public class TourDAO
     {
-        public static List<TourBUS> dsTour()
+        public static List<TourBUS> getAll()
         {
-            List<TourBUS> dsTour = new List<TourBUS>();
+            List<TourBUS> tours = new List<TourBUS>();
             String query = "select * from Tour";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
@@ -28,13 +27,14 @@ namespace QuanLyTour.DAO
                     TourBUS tour = new TourBUS();
                     tour.MaTour = reader["maTour"].ToString();
                     tour.TenTour = reader["tenTour"].ToString();
-                    dsTour.Add(tour);
+                    tours.Add(tour);
                 }
                 reader.Close();
                 connection.close();
             }
 
-            return dsTour;
+            return tours;
         }
+
     }
 }

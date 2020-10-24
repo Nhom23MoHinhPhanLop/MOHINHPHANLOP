@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace QuanLyTour.BUS
 {
-    public class ChiPhi
+    public class ChiPhiBUS
     {
-        private String maChi;
-        private String mucdich;
         private long tien;
         DoanBUS doan;
-        public string MaChi { get => maChi; set => maChi = value; }
-        public string Mucdich { get => mucdich; set => mucdich = value; }
+        LoaiChiPhiBUS loaiChiPhi;
+
         public long Tien { get => tien; set => tien = value; }
         public DoanBUS Doan { get => doan; set => doan = value; }
+        public LoaiChiPhiBUS LoaiChiPhi { get => loaiChiPhi; set => loaiChiPhi = value; }
     }
 }

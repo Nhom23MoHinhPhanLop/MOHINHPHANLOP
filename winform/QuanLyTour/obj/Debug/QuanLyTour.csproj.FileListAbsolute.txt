@@ -8,3 +8,4 @@ C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanL
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.exe
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.pdb
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.GUI.Main.resources
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.GUI.Gia.resources

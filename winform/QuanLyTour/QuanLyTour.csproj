@@ -46,12 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BUS\ChiPhi.cs" />
+    <Compile Include="BUS\ChiPhiBUS.cs" />
     <Compile Include="BUS\ChucVuBUS.cs" />
     <Compile Include="BUS\DiaDiemBUS.cs" />
     <Compile Include="BUS\DoanBUS.cs" />
     <Compile Include="BUS\GiaBUS.cs" />
     <Compile Include="BUS\KhachHangBUS.cs" />
+    <Compile Include="BUS\LoaiChiPhiBUS.cs" />
     <Compile Include="BUS\LoaiTourBUS.cs" />
     <Compile Include="BUS\NhanVienBUS.cs" />
     <Compile Include="BUS\TourBUS.cs" />
@@ -59,9 +60,17 @@
     <Compile Include="DAO\Connection.cs" />
     <Compile Include="DAO\DiaDiemDAO.cs" />
     <Compile Include="DAO\DoanDAO.cs" />
+    <Compile Include="DAO\GiaDAO.cs" />
     <Compile Include="DAO\KhachHangDAO.cs" />
+    <Compile Include="DAO\LoaiTourDAO.cs" />
     <Compile Include="DAO\NhanVienDAO.cs" />
     <Compile Include="DAO\TourDAO.cs" />
+    <Compile Include="GUI\Gia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Gia.Designer.cs">
+      <DependentUpon>Gia.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +79,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\Gia.resx">
+      <DependentUpon>Gia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -95,6 +107,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DAO\database.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

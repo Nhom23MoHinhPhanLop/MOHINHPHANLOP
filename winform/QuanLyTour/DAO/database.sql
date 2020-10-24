@@ -46,10 +46,14 @@ create table Doan(
 	ngayKetThuc date not null,
 	maTour varchar(20) not null foreign key references Tour(maTour),
 );
+create table LoaiChiPhi(
+	maLoaiChiPhi varchar(20) primary key not null,
+	tenLoaiChiPhi nvarchar(200) not null,
+
+);
 create table ChiPhi(
-	maChi varchar(20)primary key not null,
 	tien int,
-	mucdich nvarchar(200),
+	maLoaiChiPhi varchar(20)not null foreign key references LoaiChiPhi(maLoaiChiPhi),
 	maDoan varchar(20)not null foreign key references Doan(maDoan),
 		
 );
@@ -167,29 +171,36 @@ values	('DOAN1',N'Đoàn Đại học Sài Gòn',getDate(),getDate(),'TOUR1'),
 		('DOAN5',N'Đoàn siêu đa cấp',getDate(),getDate(),'TOUR7');
 go
 
-
+--Thêm dữ liệu cho loại chi phí
+insert into LoaiChiPhi(maLoaiChiPhi,tenLoaiChiPhi)
+values	('LOAICHIPHI1',N'Ăn uống'),
+		('LOAICHIPHI2',N'Taxi'),
+		('LOAICHIPHI3',N'Vé vào cổng'),
+		('LOAICHIPHI4',N'Khách sạn'),
+		('LOAICHIPHI5',N'Dịch vụ');
+go
 --Thêm dữ liệu cho chi phí
-insert into ChiPhi(tien,maDoan,maChi,mucdich)
-values	(1222132,'DOAN1','LOAICHIPHI1',N'Ăn uống'),
-		(512232,'DOAN1','LOAICHIPHI2',N'Taxi'),
-		(50000,'DOAN1','LOAICHIPHI3',N'Vé vào cổng'),
-		(20000,'DOAN1','LOAICHIPHI4',N'Khách sạn'),
-		(300000,'DOAN1','LOAICHIPHI5',N'Ăn uống'),
-		(1222132,'DOAN2','LOAICHIPHI6',N'Khách sạn'),
-		(112232,'DOAN2','LOAICHIPHI7',N'Ăn uống'),
-		(20000,'DOAN2','LOAICHIPHI8',N'Vé tham quan'),
-		(10000,'DOAN2','LOAICHIPHI9',N'Ăn uống'),
-		(200000,'DOAN2','LOAICHIPHI10',N'Ăn uống'),
-		(2122132,'DOAN3','LOAICHIPHI11',N'Ăn uống'),
-		(412232,'DOAN3','LOAICHIPHI12',N'Ăn uống'),
-		(20000,'DOAN3','LOAICHIPHI13',N'Ăn uống'),
-		(40000,'DOAN3','LOAICHIPHI14',N'Ăn uống'),
-		(400000,'DOAN3','LOAICHIPHI15',N'Ăn uống'),
-		(1222132,'DOAN4','LOAICHIPHI16',N'Ăn uống'),
-		(512232,'DOAN5','LOAICHIPHI17',N'Ăn uống'),
-		(50000,'DOAN4','LOAICHIPHI18',N'Ăn uống'),
-		(20000,'DOAN5','LOAICHIPHI19',N'Ăn uống'),
-		(300000,'DOAN4','LOAICHIPHI20',N'Ăn uống');
+insert into ChiPhi(tien,maDoan,maLoaiChiPhi)
+values	(1222132,'DOAN1','LOAICHIPHI1'),
+		(512232,'DOAN1','LOAICHIPHI2'),
+		(50000,'DOAN1','LOAICHIPHI3'),
+		(20000,'DOAN1','LOAICHIPHI4'),
+		(300000,'DOAN1','LOAICHIPHI5'),
+		(1222132,'DOAN2','LOAICHIPHI1'),
+		(112232,'DOAN2','LOAICHIPHI2'),
+		(20000,'DOAN2','LOAICHIPHI3'),
+		(10000,'DOAN2','LOAICHIPHI4'),
+		(200000,'DOAN2','LOAICHIPHI5'),
+		(2122132,'DOAN3','LOAICHIPHI1'),
+		(412232,'DOAN3','LOAICHIPHI1'),
+		(20000,'DOAN3','LOAICHIPHI3'),
+		(40000,'DOAN3','LOAICHIPHI4'),
+		(400000,'DOAN3','LOAICHIPHI4'),
+		(1222132,'DOAN4','LOAICHIPHI1'),
+		(512232,'DOAN5','LOAICHIPHI2'),
+		(50000,'DOAN4','LOAICHIPHI3'),
+		(20000,'DOAN5','LOAICHIPHI4'),
+		(300000,'DOAN4','LOAICHIPHI5');
 go
 		
 --Thêm dữ liệu cho khách hàng

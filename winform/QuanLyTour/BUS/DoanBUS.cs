@@ -12,7 +12,7 @@ namespace QuanLyTour.BUS
         private String tenDoan;
         private DateTime ngayBatDau;
         private DateTime ngayKetThuc;
-        List<ChiPhi> dsChiPhi;
+        List<ChiPhiBUS> dsChiPhi;
         List<KhachHangBUS> dsKhachHang;
         List<NhanVienBUS> dsNhanVien;
         TourBUS tour;
@@ -21,7 +21,7 @@ namespace QuanLyTour.BUS
         public string TenDoan { get => tenDoan; set => tenDoan = value; }
         public DateTime NgayBatDau { get => ngayBatDau; set => ngayBatDau = value; }
         public DateTime NgayKetThuc { get => ngayKetThuc; set => ngayKetThuc = value; }
-        public List<ChiPhi> DsChiPhi { get => dsChiPhi; set => dsChiPhi = value; }
+        public List<ChiPhiBUS> DsChiPhi { get => dsChiPhi; set => dsChiPhi = value; }
         public List<KhachHangBUS> DsKhachHang { get => dsKhachHang; set => dsKhachHang = value; }
         public TourBUS Tour { get => tour; set => tour = value; }
         public List<NhanVienBUS> DsNhanVien { get => dsNhanVien; set => dsNhanVien = value; }
