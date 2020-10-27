@@ -1,5 +1,6 @@
 ﻿
 using QuanLyTour.BUS;
+using QuanLyTour.DAO;
 using System;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace QuanLyTour.BUS
         private String maTour;
         private String tenTour;
         LoaiTourBUS loaiTour;
+        GiaBUS giaHienTai;
         List<GiaBUS> dsGia;
         List<DoanBUS> dsDoan;
         List<DiaDiemBUS> dsDiaDiem;
@@ -20,6 +22,25 @@ namespace QuanLyTour.BUS
         public List<GiaBUS> DsGia { get => dsGia; set => dsGia = value; }
         public List<DoanBUS> DsDoan { get => dsDoan; set => dsDoan = value; }
         public List<DiaDiemBUS> DsDiaDiem { get => dsDiaDiem; set => dsDiaDiem = value; }
+        public GiaBUS GiaHienTai { get => giaHienTai; set => giaHienTai = value; }
 
+        public void Delete()
+        {
+            TourDAO.XoaTour(this);
+        }
+
+        public void ThemMoi()
+        {
+            if (!TourDAO.kiemtraTourTonTai(this))
+            {
+                TourDAO.ThemTour(this);
+                TourDAO.themGiaTour(this);
+                TourDAO.themDiaDiemTour(this);
+            }
+            else
+            {
+                
+            }
+        }
     }
 }
