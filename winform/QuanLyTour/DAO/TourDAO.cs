@@ -52,9 +52,9 @@ namespace QuanLyTour.DAO
                 return count == 1;
             }
         }
-        public static void ThemTour(TourBUS tour)
+        public static void themTour(TourBUS tour)
         {
-            String query = "insert into Tour (maTour,tenTour,maLoai) values (@maTour,N'@tenTour',@maLoai)";
+            String query = "insert into Tour (maTour,tenTour,maLoai) values (@maTour,@tenTour,@maLoai)";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
@@ -69,7 +69,7 @@ namespace QuanLyTour.DAO
         }
         public static void CapNhatTour(TourBUS tour)
         {
-            String query = "update Tour set tenTour=N'@tenTour',maLoai=@maLoai where  maTour = @maTour ";
+            String query = "update Tour set tenTour=@tenTour,maLoai=@maLoai where  maTour = @maTour ";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
@@ -102,9 +102,10 @@ namespace QuanLyTour.DAO
             String query = "insert into ChiTietTour (maTour,maDiaDiem) values ";
             foreach (DiaDiemBUS diadiem in tour.DsDiaDiem)
             {
-                String str = String.Format("({0},{1}),", tour.MaTour, diadiem.MaDiaDiem);
+                String str = String.Format("('{0}','{1}'),", tour.MaTour, diadiem.MaDiaDiem);
                 query += str;
             }
+            query = query.Substring(0, query.Length - 1);
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
@@ -119,10 +120,10 @@ namespace QuanLyTour.DAO
             String query = "insert into Gia(tien,ngayBatDau,ngayKetThuc,maTour)values ";
             foreach (GiaBUS gia in tour.DsGia)
             {
-                String str = String.Format("({0},{1},{2},{3}),", gia.Tien, gia.NgayBatDau.Date, gia.NgayKetThuc.Date, tour.MaTour);
+                String str = String.Format("({0},'{1}','{2}','{3}'),", gia.Tien, gia.NgayBatDau.ToString("yyyy-MM-dd HH:mm:ss"), gia.NgayKetThuc.ToString("yyyy-MM-dd HH:mm:ss"), tour.MaTour);
                 query += str;
             }
-            System.Windows.Forms.MessageBox.Show(query);
+            query = query.Substring(0, query.Length - 1);
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {

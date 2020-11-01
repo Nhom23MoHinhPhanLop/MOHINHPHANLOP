@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using QuanLyTour.BUS;
 
 namespace QuanLyTour.DAO
@@ -54,7 +55,7 @@ namespace QuanLyTour.DAO
                     gia.Tien = long.Parse(reader["tien"].ToString());
                     gia.NgayBatDau = DateTime.Parse(reader["ngayBatDau"].ToString());
                     gia.NgayKetThuc = DateTime.Parse(reader["ngayKetThuc"].ToString());
-                    gia.Tour = tour;
+
                     dsGia.Add(gia);
                 }
                 reader.Close();
@@ -80,7 +81,6 @@ namespace QuanLyTour.DAO
                     gia.Tien = long.Parse(reader["tien"].ToString());
                     gia.NgayBatDau = DateTime.Parse(reader["ngayBatDau"].ToString());
                     gia.NgayKetThuc = DateTime.Parse(reader["ngayKetThuc"].ToString());
-                    gia.Tour = tour;
                 }
                 reader.Close();
                 connection.close();

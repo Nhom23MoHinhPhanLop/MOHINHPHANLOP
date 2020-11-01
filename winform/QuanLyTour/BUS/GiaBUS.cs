@@ -6,12 +6,21 @@ namespace QuanLyTour.BUS
         private long tien;
         private DateTime ngayBatDau;
         private DateTime ngayKetThuc;
-        TourBUS tour;
 
 
         public long Tien { get => tien; set => tien = value; }
         public DateTime NgayBatDau { get => ngayBatDau; set => ngayBatDau = value; }
         public DateTime NgayKetThuc { get => ngayKetThuc; set => ngayKetThuc = value; }
-        public TourBUS Tour { get => tour; set => tour = value; }
+      
+
+        public override string ToString()
+        {
+            return ""+Tien+NgayBatDau+NgayKetThuc;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj.ToString() == this.ToString();
+        }
     }
 }

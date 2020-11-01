@@ -10,5 +10,14 @@ namespace QuanLyTour.BUS
         public string MaDiaDiem { get => maDiaDiem; set => maDiaDiem = value; }
         public string TenDiaDiem { get => tenDiaDiem; set => tenDiaDiem = value; }
         public string Diaphuong { get => diaphuong; set => diaphuong = value; }
+
+        public override string ToString()
+        {
+            return maDiaDiem;
+        }
+        public override bool Equals(object obj)
+        {
+            return this.ToString() == obj.ToString();
+        }
     }
 }

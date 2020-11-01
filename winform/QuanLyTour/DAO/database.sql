@@ -116,17 +116,17 @@ values	('TOUR1',N'DU LỊCH PHAN THIẾT - MŨI NÉ - LÀNG CHÀI XƯA','LOAI1')
 go
 --Thêm dữ liệu cho giá
 insert into Gia(tien,ngayBatDau,ngayKetThuc,maTour)
-values	(1282423,getDate(),getDate(),'TOUR1'),
-		(142232,getDate(),getDate(),'TOUR1'),
-		(123145,getDate(),getDate(),'TOUR2'),
-		(1152423,getDate(),getDate(),'TOUR3'),
-		(5224423,getDate(),getDate(),'TOUR4'),
-		(121421,getDate(),getDate(),'TOUR5'),
-		(123122,getDate(),getDate(),'TOUR6'),
-		(4732452,getDate(),getDate(),'TOUR8'),
-		(5463456,getDate(),getDate(),'TOUR9'),
-		(5684433,getDate(),getDate(),'TOUR10'),
-		(9878423,getDate(),getDate(),'TOUR7');
+values	(1282423,DATEADD(week,-2,GETDATE()),DATEADD(week,8,GETDATE()),'TOUR1'),
+		(142232,DATEADD(week,-4,GETDATE()),DATEADD(week,-2,GETDATE()),'TOUR1'),
+		(123145,DATEADD(day,-2,GETDATE()),DATEADD(day,15,GETDATE()),'TOUR2'),
+		(1152423,DATEADD(day,-3,GETDATE()),DATEADD(week,9,GETDATE()),'TOUR3'),
+		(5224423,DATEADD(day,-4,GETDATE()),DATEADD(week,2,GETDATE()),'TOUR4'),
+		(121421,DATEADD(day,-5,GETDATE()),DATEADD(week,3,GETDATE()),'TOUR5'),
+		(123122,DATEADD(day,-6,GETDATE()),DATEADD(week,6,GETDATE()),'TOUR6'),
+		(4732452,DATEADD(day,-7,GETDATE()),DATEADD(week,7,GETDATE()),'TOUR8'),
+		(5463456,DATEADD(day,-8,GETDATE()),DATEADD(week,6,GETDATE()),'TOUR9'),
+		(5684433,DATEADD(day,-9,GETDATE()),DATEADD(week,5,GETDATE()),'TOUR10'),
+		(9878423,DATEADD(day,-10,GETDATE()),DATEADD(week,4,GETDATE()),'TOUR7');
 go
 --Thêm dữ liệu cho địa điểm
 insert into DiaDiem(maDiaDiem,tenDiaDiem,diaphuong) 
@@ -268,3 +268,6 @@ values	('NV1','DOAN1'),
 		('NV7','DOAN4'),
 		('NV6','DOAN5');
 go
+
+insert into Gia(tien,ngayBatDau,ngayKetThuc,maTour)
+values (123233,'2020-10-23 13:13:45','2020-10-23 13:13:45','TOUR101')
