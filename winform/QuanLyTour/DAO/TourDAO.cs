@@ -133,6 +133,28 @@ namespace QuanLyTour.DAO
                 connection.close();
             }
         }
+        public static TourBUS getTourByDoan(DoanBUS doan)
+        {
+            TourBUS tour = new TourBUS();
+            String query = "select * from Tour,Doan where Tour.maTour=Doan.maTour and maDoan=@madoan";
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
+            {
 
+                connection.open();
+                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    tour.MaTour = reader["maTour"].ToString();
+                    tour.TenTour = reader["tenTour"].ToString();
+                    
+                }
+                reader.Close();
+                connection.close();
+            }
+            return tour;
+        }
     }
 }

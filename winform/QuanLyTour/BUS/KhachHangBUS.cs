@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyTour.DAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,10 @@ namespace QuanLyTour.BUS
         private String gioitinh;
         private String quoctich;
         DoanBUS doan;
+        public KhachHangBUS()
+        {
+            doan = new DoanBUS();
+        }
         public string MaKhachHang { get => maKhachHang; set => maKhachHang = value; }
         public string TenKhachHang { get => tenKhachHang; set => tenKhachHang = value; }
         public string Cmnd { get => cmnd; set => cmnd = value; }
@@ -24,5 +29,17 @@ namespace QuanLyTour.BUS
         public string Gioitinh { get => gioitinh; set => gioitinh = value; }
         public string Quoctich { get => quoctich; set => quoctich = value; }
         public DoanBUS Doan { get => doan; set => doan = value; }
+        public static List<KhachHangBUS> getKhachHangByDoan(DoanBUS doan)
+        {
+            return DAO.KhachHangDAO.getKhachHangByDoan(doan);
+        }
+        public static List<KhachHangBUS> getKhachHangKhongCoDoan(DoanBUS doan)
+        {
+            return DAO.KhachHangDAO.getKhachHangKhongCoDoan(doan);
+        }
+        public static void ThemKhachHangDoan(DoanBUS doan, List<KhachHangBUS> dsKhachHang)
+        {
+            DAO.KhachHangDAO.ThemKhachHangDoan(doan, dsKhachHang);
+        }
     }
 }

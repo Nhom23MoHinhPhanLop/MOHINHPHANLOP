@@ -57,6 +57,8 @@
     <Compile Include="BUS\NhanVienBUS.cs" />
     <Compile Include="BUS\TourBUS.cs" />
     <Compile Include="DAO\ChiPhiDAO.cs" />
+    <Compile Include="DAO\ChucVuDAO.cs" />
+    <Compile Include="DAO\LoaiChiPhiDAO.cs" />
     <Compile Include="DAO\Connection.cs" />
     <Compile Include="DAO\DiaDiemDAO.cs" />
     <Compile Include="DAO\DoanDAO.cs" />
@@ -71,11 +73,11 @@
     <Compile Include="GUI\Gia.Designer.cs">
       <DependentUpon>Gia.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Main.cs">
+    <Compile Include="GUI\KhachHang.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
+    <Compile Include="GUI\KhachHang.Designer.cs">
+      <DependentUpon>KhachHang.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Main2.cs">
       <SubType>Form</SubType>
@@ -83,16 +85,25 @@
     <Compile Include="GUI\Main2.Designer.cs">
       <DependentUpon>Main2.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\NhanVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\NhanVien.Designer.cs">
+      <DependentUpon>NhanVien.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Gia.resx">
       <DependentUpon>Gia.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Main.resx">
-      <DependentUpon>Main.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\KhachHang.resx">
+      <DependentUpon>KhachHang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Main2.resx">
       <DependentUpon>Main2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NhanVien.resx">
+      <DependentUpon>NhanVien.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

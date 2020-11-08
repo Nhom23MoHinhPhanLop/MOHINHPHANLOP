@@ -20,6 +20,7 @@ namespace QuanLyTour.BUS
             dsDiaDiem = new List<DiaDiemBUS>();
             dsDoan = new List<DoanBUS>();
             dsGia = new List<GiaBUS>();
+            giaHienTai = new GiaBUS();
         }
         public string MaTour { get => maTour; set => maTour = value; }
         public string TenTour { get => tenTour; set => tenTour = value; }
@@ -36,11 +37,12 @@ namespace QuanLyTour.BUS
 
         public void ThemMoi()
         {
-
-            TourDAO.themTour(this);
-            TourDAO.themGiaTour(this);
-            TourDAO.themDiaDiemTour(this);
-
+            if (isExist())
+            {
+                TourDAO.themTour(this);
+                TourDAO.themGiaTour(this);
+                TourDAO.themDiaDiemTour(this);
+            }
         }
         public bool isExist()
         {

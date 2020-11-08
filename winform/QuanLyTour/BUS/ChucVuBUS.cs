@@ -13,5 +13,10 @@ namespace QuanLyTour.BUS
 
         public string MaChucVu { get => maChucVu; set => maChucVu = value; }
         public string TenChucVu { get => tenChucVu; set => tenChucVu = value; }
+        public ChucVuBUS getChucVuByID()
+        {
+            return DAO.ChucVuDAO.getChucVuById(this);
+        }
+   
     }
 }

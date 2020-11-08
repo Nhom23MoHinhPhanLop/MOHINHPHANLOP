@@ -13,5 +13,6 @@ namespace QuanLyTour.BUS
 
         public string MaLoaiChiPhi { get => maLoaiChiPhi; set => maLoaiChiPhi = value; }
         public string TenLoaiChiPhi { get => tenLoaiChiPhi; set => tenLoaiChiPhi = value; }
+
     }
 }

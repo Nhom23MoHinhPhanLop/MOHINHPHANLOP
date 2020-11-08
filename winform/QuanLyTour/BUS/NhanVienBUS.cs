@@ -17,7 +17,10 @@ namespace QuanLyTour.BUS
         private String gioitinh;
         private String quoctich;
         ChucVuBUS chucvu;
-
+        public NhanVienBUS()
+        {
+            this.Chucvu = new ChucVuBUS();
+        }
         public string MaNhanVien { get => maNhanVien; set => maNhanVien = value; }
         public string TenNhanVien { get => tenNhanVien; set => tenNhanVien = value; }
         public string Cmnd { get => cmnd; set => cmnd = value; }
@@ -26,5 +29,10 @@ namespace QuanLyTour.BUS
         public string Gioitinh { get => gioitinh; set => gioitinh = value; }
         public string Quoctich { get => quoctich; set => quoctich = value; }
         public ChucVuBUS Chucvu { get => chucvu; set => chucvu = value; }
+        public static  List<NhanVienBUS> getNhanVienByDoan(DoanBUS doan)
+        {
+            return DAO.NhanVienDAO.getNhanVienByDoan(doan);
+        }
+
     }
 }

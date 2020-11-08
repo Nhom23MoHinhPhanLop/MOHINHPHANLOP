@@ -8,33 +8,28 @@ using System.Threading.Tasks;
 
 namespace QuanLyTour.DAO
 {
-    public class DoanDAO
+    public class ChucVuDAO
     {
-        public static List<DoanBUS> getAll()
+        public static ChucVuBUS getChucVuById(ChucVuBUS chucvu)
         {
-            List<DoanBUS> list = new List<DoanBUS>();
-            String query = "select * from Doan";
+
+            String query = "select * from ChucVu where maChucVu=@machucvu";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
 
                 connection.open();
+                command.Parameters.AddWithValue("@machucvu", chucvu.MaChucVu);
                 var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    DoanBUS doan = new DoanBUS();
-                    doan.MaDoan = reader["maDoan"].ToString();
-                    doan.TenDoan = reader["tenDoan"].ToString();
-                    doan.NgayBatDau = DateTime.Parse(reader["ngayBatDau"].ToString());
-                    doan.NgayKetThuc = DateTime.Parse(reader["ngayKetThuc"].ToString());
-                    
-                    list.Add(doan);
+                    chucvu.TenChucVu = reader["tenChucVu"].ToString();
                 }
                 reader.Close();
                 connection.close();
             }
-            return list;
+            return chucvu;
         }
     }
 }
