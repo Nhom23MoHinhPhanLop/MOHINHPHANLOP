@@ -19,7 +19,7 @@ namespace QuanLyTour.DAO
                 connect = new SqlConnection();
                 connect.ConnectionString =
                    "Data Source=CHIEN-LT\\SQLEXPRESS;" +
-                    "Initial Catalog=QLTOUR;" +
+                    "Initial Catalog=QUANLYTOUR;" +
                     "User id=sa;" +
                     "Password=sa;";
             }

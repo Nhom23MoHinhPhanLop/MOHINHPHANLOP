@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyTour.DAO;
+using System;
 
 namespace QuanLyTour.BUS
 {
@@ -18,6 +19,15 @@ namespace QuanLyTour.BUS
         public override bool Equals(object obj)
         {
             return this.ToString() == obj.ToString();
+        }
+
+        public void ThemVaoTour(TourBUS tour)
+        {
+            DiaDiemDAO.ThemVaoTour(this, tour);
+        }
+        public void XoaTrongTour(TourBUS tour)
+        {
+            DiaDiemDAO.XoaTrongTour(this, tour);
         }
     }
 }

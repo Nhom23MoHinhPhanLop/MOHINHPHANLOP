@@ -14,6 +14,7 @@ namespace QuanLyTour.GUI
     public partial class KhachHang : Form
     {
         DoanBUS doan;
+        public bool clicked = false;
         public KhachHang()
         {
             InitializeComponent();
@@ -29,11 +30,16 @@ namespace QuanLyTour.GUI
             grid_dsKhachHang.DataSource = null;
             grid_dsKhachHang.DataSource = BUS.KhachHangBUS.getKhachHangKhongCoDoan(this.doan);
             grid_dsKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            grid_dsKhachHang.Columns["doan"].Visible = false;
+            grid_dsKhachHang.Columns["quoctich"].Visible = false;
+
+            grid_dsKhachHang.ClearSelection();
 
         }
 
         private void btn_them_Click(object sender, EventArgs e)
         {
+            clicked = true;
             this.Close();
         }
     }

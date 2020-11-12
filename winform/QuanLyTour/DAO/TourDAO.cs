@@ -52,7 +52,7 @@ namespace QuanLyTour.DAO
                 return count == 1;
             }
         }
-        public static void themTour(TourBUS tour)
+        public static void Them(TourBUS tour)
         {
             String query = "insert into Tour (maTour,tenTour,maLoai) values (@maTour,@tenTour,@maLoai)";
             Connection connection = new Connection();
@@ -67,32 +67,30 @@ namespace QuanLyTour.DAO
                 connection.close();
             }
         }
-        public static void CapNhatTour(TourBUS tour)
+        public static void Sua(TourBUS tourcu, TourBUS tourmoi)
         {
-            String query = "update Tour set tenTour=@tenTour,maLoai=@maLoai where  maTour = @maTour ";
+            String query = "update Tour set maTour=@maTour, tenTour=@tenTour,maLoai=@maLoai where  maTour = @maTourCu ";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
 
                 connection.open();
-                command.Parameters.AddWithValue("@maTour", tour.MaTour);
-                command.Parameters.AddWithValue("@tenTour", tour.TenTour);
-                command.Parameters.AddWithValue("@maLoai", tour.LoaiTour.MaLoai);
+                command.Parameters.AddWithValue("@maTour", tourmoi.MaTour);
+                command.Parameters.AddWithValue("@tenTour", tourmoi.TenTour);
+                command.Parameters.AddWithValue("@maLoai", tourmoi.LoaiTour.MaLoai);
+                command.Parameters.AddWithValue("@maTourCu", tourcu.MaTour);
                 command.ExecuteNonQuery();
                 connection.close();
             }
         }
-        public static void XoaTour(TourBUS tour)
+        public static void Xoa(TourBUS tour)
         {
             String query = "delete from Tour where  maTour = @maTour ";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
-
                 connection.open();
                 command.Parameters.AddWithValue("@maTour", tour.MaTour);
-                command.Parameters.AddWithValue("@tenTour", tour.TenTour);
-                command.Parameters.AddWithValue("@maLoai", tour.LoaiTour.MaLoai);
                 command.ExecuteNonQuery();
                 connection.close();
             }
@@ -149,7 +147,7 @@ namespace QuanLyTour.DAO
                 {
                     tour.MaTour = reader["maTour"].ToString();
                     tour.TenTour = reader["tenTour"].ToString();
-                    
+
                 }
                 reader.Close();
                 connection.close();

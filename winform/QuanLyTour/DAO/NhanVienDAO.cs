@@ -69,5 +69,48 @@ namespace QuanLyTour.DAO
             }
             return dsNhanVien;
         }
+
+        public static void them(NhanVienBUS nhanvien)
+        {
+
+        }
+        public static void xoa(NhanVienBUS nhanvien)
+        {
+
+        }
+        public static void XoaNhanVienByDoan(NhanVienBUS nhanvien, DoanBUS doan)
+        {
+
+            String query = "delete phancong where maNhanVien=@manhanvien and maDoan=@madoan";
+            Connection connect = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
+            {
+                command.Parameters.AddWithValue("@manhanvien", nhanvien.MaNhanVien);
+                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
+
+                connect.open();
+
+                command.ExecuteNonQuery();
+
+                connect.close();
+            }
+        }
+        public static void Them(NhanVienBUS nhanvien, DoanBUS doan)
+        {
+
+            String query = "insert into phancong (maNhanVien,maDoan) values (@manhanvien,@madoan)";
+            Connection connect = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
+            {
+                command.Parameters.AddWithValue("@manhanvien", nhanvien.MaNhanVien);
+                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
+
+                connect.open();
+                command.ExecuteNonQuery();
+
+                connect.close();
+            }
+        }
     }
 }
+

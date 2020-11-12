@@ -18,7 +18,7 @@ create table LoaiTour	(
 create table Tour(
 	maTour varchar(20)primary key  not null,
 	tenTour nvarchar(200),
-	maLoai varchar(20) foreign key references LoaiTour(maLoai)
+	maLoai varchar(20) foreign key references LoaiTour(maLoai) on delete cascade
 );
 
 create table Gia(
@@ -26,7 +26,7 @@ create table Gia(
 	tien int ,
 	ngayBatDau dateTime,
 	ngayKetThuc dateTime,
-	maTour varchar(20)not null foreign key references Tour(maTour)
+	maTour varchar(20)not null foreign key references Tour(maTour) on delete cascade
 
 );
 create table DiaDiem(
@@ -35,8 +35,8 @@ create table DiaDiem(
 	diaphuong nvarchar(100)
 );
 create table ChiTietTour(
-	maTour varchar(20)not null foreign key references Tour(maTour),
-	maDiaDiem varchar(20)not null foreign key references DiaDiem(maDiaDiem),
+	maTour varchar(20)not null foreign key references Tour(maTour) on delete cascade,
+	maDiaDiem varchar(20)not null foreign key references DiaDiem(maDiaDiem) on delete cascade,
 	primary key(maTour,maDiaDiem),
 );
 create table Doan(
@@ -52,10 +52,11 @@ create table LoaiChiPhi(
 
 );
 create table ChiPhi(
+	maChiphi  int IDENTITY(1,1) PRIMARY KEY,
 	tien int,
-	maLoaiChiPhi varchar(20)not null foreign key references LoaiChiPhi(maLoaiChiPhi),
-	maDoan varchar(20)not null foreign key references Doan(maDoan),
-		
+	maLoaiChiPhi varchar(20)not null foreign key references LoaiChiPhi(maLoaiChiPhi) on delete cascade,
+	maDoan varchar(20)not null foreign key references Doan(maDoan) on update cascade on delete cascade,
+	thoigian datetime default getdate()	
 );
 create table KhachHang(
 	maKhachHang varchar(20) not null primary key,
@@ -66,8 +67,8 @@ create table KhachHang(
 	sdt varchar(20),
 );
 create table ThamGia(
-	maKhachHang varchar(20)not null foreign key references KhachHang(maKhachHang),
-	maDoan varchar(20)not null foreign key references  Doan(maDoan),
+	maKhachHang varchar(20)not null foreign key references KhachHang(maKhachHang) on delete cascade,
+	maDoan varchar(20) foreign key references  Doan(maDoan)  on update cascade on delete cascade,
 	primary key (maKhachHang,maDoan)
 
 );
@@ -82,11 +83,11 @@ create table NhanVien(
 	cmnd varchar(20),
 	diachi nvarchar(200),
 	sdt varchar(20),
-	maChucVu varchar(20) not null foreign key references ChucVu(maChucVu)
+	maChucVu varchar(20) foreign key references ChucVu(maChucVu)  on update cascade on delete cascade
 );
 create table PhanCong(
-	maDoan varchar(20) not null foreign key references Doan(maDoan),
-	maNhanVien varchar(20)not null foreign key references NhanVien(maNhanVien),
+	maDoan varchar(20) not null foreign key references Doan(maDoan) on delete cascade,
+	maNhanVien varchar(20)not null foreign key references NhanVien(maNhanVien) on delete cascade,
 	primary key (maNhanVien,maDoan)
 );
 
@@ -113,6 +114,16 @@ values	('TOUR1',N'DU LỊCH PHAN THIẾT - MŨI NÉ - LÀNG CHÀI XƯA','LOAI1')
 		('TOUR8',N'DU LỊCH KHÁM PHÁ ĐỈNH FANSIPAN','LOAI1'),
 		('TOUR9',N'DU LỊCH [MÙA NƯỚC NỔI] CAO LÃNH - TRÀM CHIM','LOAI1'),
 		('TOUR10',N'DU LỊCH MÙA HOA TAM GIÁC MẠCH (HÀ NỘI - HÀ GIANG - CAO BẰNG - LẠNG SƠN)','LOAI1');
+go
+
+DECLARE @tour INT = 11;
+WHILE @tour < 40
+BEGIN
+	insert into Tour (maTour,tenTour,maLoai) 
+	values ('TOUR'+cast(@tour as varchar(20)),N'Tên tour số '+cast(@tour as varchar(20)),'LOAI'+cast(FLOOR(RAND()*(7))+1 as varchar(20)))
+   SET @tour = @tour + 1;
+END;
+
 go
 --Thêm dữ liệu cho giá
 insert into Gia(tien,ngayBatDau,ngayKetThuc,maTour)
@@ -213,7 +224,15 @@ values	('KH1',N'Huỳnh Minh Chiến'),
 		('KH6',N'Hoàng Thượng'),
 		('KH7',N'Tào Lao');
 go
+DECLARE @kh INT = 10;
 
+WHILE @kh < 40
+BEGIN
+	insert into KhachHang (maKhachHang,tenKhachHang)
+	values ('KH'+cast(@kh as varchar(20)),N'Khách hàng '+cast(@kh as varchar(20)))
+   SET @kh = @kh + 1;
+END;
+go
 --Thêm dữ liệu cho tham gia(khách hàng thuộc đoàn nào )
 insert into ThamGia (maKhachHang,maDoan)
 values	('KH1','DOAN1'),
@@ -246,6 +265,16 @@ values	('NV1',N'Hoàng Nhân Viên','CHUCVU1'),
 		('NV7',N'Minh Minh','CHUCVU2'),
 		('NV8',N'Thông Dịch','CHUCVU3');
 go
+DECLARE @cnt INT = 10;
+
+WHILE @cnt < 20
+BEGIN
+   insert into NhanVien(maNhanVien,tenNhanVien,maChucVu)
+	values	('NV'+cast(@cnt as varchar(20)),N'Nhân Viên '+ cast(@cnt as varchar(2)),'CHUCVU'+cast(FLOOR(RAND()*(7))+1 as varchar(20)))
+   SET @cnt = @cnt + 1;
+END;
+go
+
 --Thêm dữ liệu cho phân công
 insert into PhanCong(maNhanVien,maDoan)
 values	('NV1','DOAN1'),
@@ -268,6 +297,4 @@ values	('NV1','DOAN1'),
 		('NV7','DOAN4'),
 		('NV6','DOAN5');
 go
-
-insert into Gia(tien,ngayBatDau,ngayKetThuc,maTour)
-values (123233,'2020-10-23 13:13:45','2020-10-23 13:13:45','TOUR101')
+select COUNT(*) as counts from Doan where maDoan='DOAN12'

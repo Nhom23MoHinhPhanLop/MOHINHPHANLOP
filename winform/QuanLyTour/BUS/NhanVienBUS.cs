@@ -8,7 +8,7 @@ namespace QuanLyTour.BUS
 {
     public class NhanVienBUS
     {
-
+        #region Properties
         private String maNhanVien;
         private String tenNhanVien;
         private String cmnd;
@@ -21,6 +21,9 @@ namespace QuanLyTour.BUS
         {
             this.Chucvu = new ChucVuBUS();
         }
+        #endregion
+
+        #region Get set
         public string MaNhanVien { get => maNhanVien; set => maNhanVien = value; }
         public string TenNhanVien { get => tenNhanVien; set => tenNhanVien = value; }
         public string Cmnd { get => cmnd; set => cmnd = value; }
@@ -29,10 +32,30 @@ namespace QuanLyTour.BUS
         public string Gioitinh { get => gioitinh; set => gioitinh = value; }
         public string Quoctich { get => quoctich; set => quoctich = value; }
         public ChucVuBUS Chucvu { get => chucvu; set => chucvu = value; }
-        public static  List<NhanVienBUS> getNhanVienByDoan(DoanBUS doan)
+
+        #endregion
+
+        #region Function
+        public static List<NhanVienBUS> getNhanVienByDoan(DoanBUS doan)
         {
             return DAO.NhanVienDAO.getNhanVienByDoan(doan);
         }
+
+
+        public void XoaNhanVienByDoan(DoanBUS doan)
+        {
+            DAO.NhanVienDAO.XoaNhanVienByDoan(this, doan);
+        }
+
+        public void Them(DoanBUS doan)
+        {
+            DAO.NhanVienDAO.Them(this, doan);
+        }
+        #endregion
+
+
+
+
 
     }
 }

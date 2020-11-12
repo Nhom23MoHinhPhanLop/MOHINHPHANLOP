@@ -65,8 +65,8 @@ namespace QuanLyTour.GUI
             //hiển thị danh sách loại chi phí
             load_dsLoaiChiPhi(DAO.LoaiChiPhiDAO.getAll());
 
-
-
+            //Hiển thị danh sách tour của đoàn
+            load_cb_dsTour(dsTour);
         }
 
 
@@ -93,7 +93,6 @@ namespace QuanLyTour.GUI
 
             }
         }
-
         private void btn_themTour_Click(object sender, EventArgs e)
         {
             List<TourBUS> dsTour = (List<TourBUS>)grid_dsTour.DataSource;
@@ -104,47 +103,41 @@ namespace QuanLyTour.GUI
             tour.MaTour = txt_maTour.Text;
             tour.TenTour = txt_tenTour.Text;
             tour.LoaiTour = (LoaiTourBUS)comboBox_loaiTour.SelectedItem;
+
             if (!String.IsNullOrEmpty(tour.MaTour))
             {
-                dsTour.Add(tour);
+                if (!tour.isExist())
+                {
+                    dsTour.Add(tour);
 
-                load_dsTour(dsTour);
+                    tour.Them();
+
+                    load_dsTour(dsTour);
+                }
+                else
+                {
+                    MessageBox.Show("Tour đã tồn tại", "Thông báo");
+
+                }
             }
             else
             {
                 MessageBox.Show("Nhập mã tour", "Thông báo");
             }
         }
-
-        private void btn_suaTour_Click(object sender, EventArgs e)
-        {
-            if (grid_dsTour.SelectedRows.Count > 0)
-            {
-                int index = grid_dsTour.CurrentRow.Index;
-                List<TourBUS> dsTour = (List<TourBUS>)grid_dsTour.DataSource;
-                if (dsTour[index].MaTour == txt_maTour.Text)
-                {
-                    dsTour[index].TenTour = txt_tenTour.Text;
-                    dsTour[index].LoaiTour = (LoaiTourBUS)comboBox_loaiTour.SelectedItem;
-                    load_dsTour(dsTour);
-                }
-                else
-                {
-                    MessageBox.Show("Không sửa mã tour", "Thông báo");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Chọn 1 tour để sửa", "Thông báo");
-            }
-        }
-
         private void btn_xoaTour_Click(object sender, EventArgs e)
         {
             if (grid_dsTour.SelectedRows.Count > 0)
             {
                 List<TourBUS> dsTour = (List<TourBUS>)grid_dsTour.DataSource;
-                dsTour.RemoveAt(grid_dsTour.CurrentRow.Index);
+
+                TourBUS tour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
+
+                //Xóa tour trong cơ sở dữ liệu
+                tour.Xoa();
+
+                //Xóa tour và hiển thị lại giao diện
+                dsTour.Remove(tour);
                 load_dsTour(dsTour);
             }
             else
@@ -152,7 +145,45 @@ namespace QuanLyTour.GUI
                 MessageBox.Show("Chọn 1 tour để xóa", "Thông báo");
             }
         }
+        private void btn_suaTour_Click(object sender, EventArgs e)
+        {
+            if (grid_dsTour.SelectedRows.Count > 0)
+            {
+                List<TourBUS> dsTour = (List<TourBUS>)grid_dsTour.DataSource;
 
+                //Tạo tour mới từ giao diện
+                TourBUS tourmoi = new TourBUS();
+                tourmoi.MaTour = txt_maTour.Text;
+                tourmoi.TenTour = txt_tenTour.Text;
+                tourmoi.LoaiTour = (LoaiTourBUS)comboBox_loaiTour.SelectedItem;
+
+                //Lấy tour đang chọn
+                TourBUS tourcu = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
+
+                if (tourmoi.isExist() && tourmoi.MaTour != tourcu.MaTour)
+                {
+                    MessageBox.Show("Trùng mã tour", "Thông báo");
+                }
+                else
+                {
+                    //Sửa đoàn trong cơ sở dữ liệu
+                    tourcu.Sua(tourmoi);
+
+                    //Đặt tất cả thông tin của đoàn cũ thành đoàn mới
+                    tourcu.MaTour = tourmoi.MaTour;
+                    tourcu.TenTour = tourmoi.TenTour;
+                    tourcu.LoaiTour = tourmoi.LoaiTour;
+
+
+                    //Hiển thị lại danh sách đoàn
+                    load_dsTour(dsTour);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Chọn 1 tour để sửa", "Thông báo");
+            }
+        }
         #endregion
 
         #region DiaDiem
@@ -161,20 +192,21 @@ namespace QuanLyTour.GUI
         {
             if (grid_dsTour.SelectedRows.Count > 0)
             {
-                TourBUS currentTour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
+                TourBUS tour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
 
                 if (listBox_dsDiaDiem.SelectedIndex >= 0)
                 {
                     DiaDiemBUS diadiem = (DiaDiemBUS)listBox_dsDiaDiem.SelectedItem;
                     listBox_dsDiaDiem.Items.Remove(diadiem);
                     listBox_dsDiaDiemTour.Items.Add(diadiem);
-                    currentTour.DsDiaDiem.Add(diadiem);
 
+
+                    //Thêm vào cơ sở dữ liệu
+                    tour.ThemDiaDiem(diadiem);
                 }
                 else
                 {
                     MessageBox.Show("Chưa chọn địa điểm", "Thông báo", MessageBoxButtons.OK);
-                    listBox_dsDiaDiem.Focus();
                 }
             }
             else
@@ -188,19 +220,20 @@ namespace QuanLyTour.GUI
         {
             if (grid_dsTour.SelectedRows.Count > 0)
             {
-                TourBUS currentTour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
+                TourBUS tour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
 
                 if (listBox_dsDiaDiemTour.SelectedIndex >= 0)
                 {
                     DiaDiemBUS diadiem = (DiaDiemBUS)listBox_dsDiaDiemTour.SelectedItem;
                     listBox_dsDiaDiemTour.Items.Remove(diadiem);
                     listBox_dsDiaDiem.Items.Add(diadiem);
-                    currentTour.DsDiaDiem.Remove(diadiem);
+
+                    //Xóa trong cơ sở dữ liệu
+                    tour.XoaDiaDiem(diadiem);
                 }
                 else
                 {
                     MessageBox.Show("Chưa chọn địa điểm", "Thông báo", MessageBoxButtons.OK);
-                    listBox_dsDiaDiemTour.Focus();
 
                 }
             }
@@ -224,15 +257,20 @@ namespace QuanLyTour.GUI
             }
 
         }
-
         private void btn_themGia_Click(object sender, EventArgs e)
         {
             if (grid_dsTour.SelectedRows.Count > 0)
             {
-                TourBUS currentTour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
+                TourBUS tour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
 
-                currentTour.DsGia.Add(getGia());
-                load_dsGia(currentTour.DsGia);
+                //Lấy thông tin giá từ giao diện
+                GiaBUS gia = getGia();
+
+                //Thêm giá vào tour
+                tour.ThemGia(gia);
+
+                //Hiển thị lại danh sách giá
+                load_dsGia(tour.DsGia);
             }
             else
             {
@@ -240,44 +278,44 @@ namespace QuanLyTour.GUI
 
             }
         }
-
-        private void btn_suaGia_Click(object sender, EventArgs e)
-        {
-            if (grid_dsGia.SelectedRows.Count > 0 && grid_dsTour.SelectedRows.Count > 0)
-            {
-                TourBUS currentTour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
-
-                GiaBUS gia = (GiaBUS)grid_dsGia.CurrentRow.DataBoundItem;
-                GiaBUS newGia = getGia();
-                if (!gia.Equals(newGia))
-                {
-                    currentTour.DsGia[grid_dsGia.CurrentRow.Index] = newGia;
-                    load_dsGia(currentTour.DsGia);
-                }
-                else
-                {
-                    MessageBox.Show("Chọn 1 giá để sửa", "Thông báo");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Chọn 1 giá để sửa", "Thông báo");
-            }
-        }
-
         private void btn_xoaGia_Click(object sender, EventArgs e)
         {
             if (grid_dsGia.SelectedRows.Count > 0)
             {
-                TourBUS currentTour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
+                TourBUS tour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
 
-                currentTour.DsGia.RemoveAt(grid_dsGia.CurrentRow.Index);
-                load_dsGia(currentTour.DsGia);
+                //Lấy thông tin giá từ giao diện
+                GiaBUS gia = getGia();
+
+                //Xóa giá trong tour
+                tour.XoaGia(gia);
+
+                //Hiển thị lại danh sách giá
+                load_dsGia(tour.DsGia);
 
             }
             else
             {
                 MessageBox.Show("Chọn 1 giá để xóa", "Thông báo");
+            }
+        }
+        private void btn_suaGia_Click(object sender, EventArgs e)
+        {
+            if (grid_dsGia.SelectedRows.Count > 0 && grid_dsTour.SelectedRows.Count > 0)
+            {
+                TourBUS tour = (TourBUS)grid_dsTour.CurrentRow.DataBoundItem;
+
+                //Lấy thông tin giá từ giao diện
+                GiaBUS gia = getGia();
+
+                tour.SuaGia(gia);
+
+                load_dsGia(tour.DsGia);
+
+            }
+            else
+            {
+                MessageBox.Show("Chọn 1 giá để sửa", "Thông báo");
             }
         }
 
@@ -295,6 +333,7 @@ namespace QuanLyTour.GUI
                 txt_tenDoan.Text = doan.TenDoan;
                 datetime_batdauDoan.Value = doan.NgayBatDau;
                 datetime_ketthucDoan.Value = doan.NgayKetThuc;
+                comboBox_Tour.SelectedValue = doan.Tour.MaTour;
 
                 //Hiển thị danh sách chi phí
                 load_dsChiPhi(doan.DsChiPhi);
@@ -311,21 +350,23 @@ namespace QuanLyTour.GUI
             //Lấy danh sách đoàn dang có 
             List<DoanBUS> dsDoan = (List<DoanBUS>)grid_dsDoan.DataSource;
 
-            bool hople = true;
-            //Kiểm tra trùng mã 
+            //Lấy thông tin đoàn từ giao diện
             DoanBUS doan = getDoan();
-            if (dsDoan.Contains(doan))
+
+            if (doan.KiemTraTonTai())
             {
-                hople = false;
                 MessageBox.Show("Đoàn đã tồn tại", "Thông báo");
             }
-            if (String.IsNullOrEmpty(doan.MaDoan))
+            else if (String.IsNullOrEmpty(doan.MaDoan))
             {
-                MessageBox.Show("Nhập mã đoàn", "Thông báo");
-                hople = false;
+                MessageBox.Show("Mã đoàn không được để trống", "Thông báo");
             }
-            if (hople)
+            else
             {
+                //Thêm vào cơ sở dữ liệu
+                doan.Them();
+
+                //Thêm vào danh sách đoàn và hiển thị lại giao diện
                 dsDoan.Add(doan);
                 load_dsDoan(dsDoan);
             }
@@ -337,7 +378,13 @@ namespace QuanLyTour.GUI
 
             if (grid_dsDoan.SelectedRows.Count > 0)
             {
-                dsDoan.RemoveAt(grid_dsDoan.CurrentRow.Index);
+                DoanBUS doan = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
+
+                //Xóa đoàn trong cơ sở dữ liệu
+                doan.Xoa();
+
+                //Xóa đoàn và hiển thị lại giao diện
+                dsDoan.Remove(doan);
                 load_dsDoan(dsDoan);
             }
             else
@@ -357,28 +404,32 @@ namespace QuanLyTour.GUI
                 //Lấy đoàn đang chọn
                 DoanBUS doancu = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
 
-                //Kiểm tra trùng mã 
-                if (doanmoi.MaDoan != doancu.MaDoan)
+                if (doanmoi.KiemTraTonTai() && doanmoi.MaDoan != doancu.MaDoan)
                 {
-                    MessageBox.Show("Không được sửa mã đoàn", "Thông báo");
+                    MessageBox.Show("Trùng mã đoàn", "Thông báo");
                 }
                 else
                 {
+                    //Sửa đoàn trong cơ sở dữ liệu
+                    doancu.Sua(doanmoi);
+
                     //Đặt tất cả thông tin của đoàn cũ thành đoàn mới
+                    doancu.MaDoan = doanmoi.MaDoan;
                     doancu.TenDoan = doanmoi.TenDoan;
                     doancu.NgayBatDau = doanmoi.NgayBatDau;
                     doancu.NgayKetThuc = doanmoi.NgayKetThuc;
+                    doancu.Tour = doanmoi.Tour;
+
                     //Hiển thị lại danh sách đoàn
                     load_dsDoan(dsDoan);
                 }
+
             }
             else
             {
                 MessageBox.Show("Chọn 1 đoàn để sửa", "Thông báo");
             }
         }
-
-
         #endregion
 
         #region Khách hàng
@@ -392,16 +443,27 @@ namespace QuanLyTour.GUI
                 KhachHang formKhachHang = new KhachHang(doan);
                 formKhachHang.ShowDialog();
 
-                //Lấy danh sách khách hàng được chọn ở form danh sách khách hàng
-                List<KhachHangBUS> dsThemMoi = new List<KhachHangBUS>();
-                foreach (DataGridViewRow item in formKhachHang.grid_dsKhachHang.SelectedRows)
+                if (formKhachHang.grid_dsKhachHang.SelectedRows.Count > 0 && formKhachHang.clicked)
                 {
-                    dsThemMoi.Add((KhachHangBUS)item.DataBoundItem);
-                }
+                    //Lấy danh sách khách hàng được chọn ở form danh sách khách hàng
+                    List<KhachHangBUS> dsThemMoi = new List<KhachHangBUS>();
 
-                //thêm danh sách khách hàng vào danh sách khách hàng của đoàn đang chọn và hiển thị lại giao diện
-                doan.DsKhachHang.AddRange(dsThemMoi);
-                load_dsKhachHang(doan.DsKhachHang);
+                    foreach (DataGridViewRow row in formKhachHang.grid_dsKhachHang.SelectedRows)
+                    {
+                        KhachHangBUS khachhang = (KhachHangBUS)row.DataBoundItem;
+
+                        dsThemMoi.Add(khachhang);
+
+                        //Thêm khách hàng ở cơ sở dữ liệu
+                        doan.ThemKhachHang(khachhang);
+                    }
+
+
+                    //thêm danh sách khách hàng vào danh sách khách hàng của đoàn đang chọn và hiển thị lại giao diện
+                    doan.DsKhachHang.AddRange(dsThemMoi);
+                    load_dsKhachHang(doan.DsKhachHang);
+
+                }
             }
             else
             {
@@ -416,11 +478,16 @@ namespace QuanLyTour.GUI
                 DoanBUS doan = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
 
                 //Xóa từng khách hàng được chọn
-                foreach (DataGridViewRow khachhang in grid_dsKhachHang.SelectedRows)
+                foreach (DataGridViewRow row in grid_dsKhachHang.SelectedRows)
                 {
-                    doan.DsKhachHang.Remove((KhachHangBUS)khachhang.DataBoundItem);
-                }
+                    KhachHangBUS khachhang = (KhachHangBUS)row.DataBoundItem;
 
+                    doan.DsKhachHang.Remove(khachhang);
+
+                    //Xóa ở cơ sở dữ liệu
+                    doan.XoaKhachHang(khachhang);
+
+                }
                 //Hiển thị lại giao diện
                 load_dsKhachHang(doan.DsKhachHang);
             }
@@ -443,15 +510,21 @@ namespace QuanLyTour.GUI
                 formNhanVien.ShowDialog();
 
                 //Lấy danh sách nhân viên được chọn ở form trên
-                List<NhanVienBUS> dsThemMoi = new List<NhanVienBUS>();
-                foreach (DataGridViewRow item in formNhanVien.grid_dsNhanVien.SelectedRows)
+                if (formNhanVien.grid_dsNhanVien.SelectedRows.Count > 0 && formNhanVien.clicked)
                 {
-                    dsThemMoi.Add((NhanVienBUS)item.DataBoundItem);
-                }
+                    List<NhanVienBUS> dsThemMoi = new List<NhanVienBUS>();
+                    foreach (DataGridViewRow row in formNhanVien.grid_dsNhanVien.SelectedRows)
+                    {
+                        NhanVienBUS nhanvien = (NhanVienBUS)row.DataBoundItem;
+                        dsThemMoi.Add(nhanvien);
 
-                //Thêm vào danh sách nhân viên của đoàn đang chọn và hiển thị lại giao diện
-                doan.DsNhanVien.AddRange(dsThemMoi);
-                load_dsNhanVien(doan.DsNhanVien);
+                        //Thêm danh sách nhân viên vào cơ sở dữ liệu
+                        doan.ThemNhanVien(nhanvien);
+                    }
+                    //Thêm vào danh sách nhân viên của đoàn đang chọn và hiển thị lại giao diện
+                    doan.DsNhanVien.AddRange(dsThemMoi);
+                    load_dsNhanVien(doan.DsNhanVien);
+                }
             }
             else
             {
@@ -465,24 +538,26 @@ namespace QuanLyTour.GUI
                 DoanBUS doan = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
 
                 //Xóa từng nhân viên được chọn
-                foreach (DataGridViewRow nhanvien in grid_dsNhanVien.SelectedRows)
+                foreach (DataGridViewRow row in grid_dsNhanVien.SelectedRows)
                 {
-                    doan.DsNhanVien.Remove((NhanVienBUS)nhanvien.DataBoundItem);
+                    NhanVienBUS nhanvien = (NhanVienBUS)row.DataBoundItem;
+
+                    doan.DsNhanVien.Remove(nhanvien);
+
+                    //Cập nhật ở cơ sở dữ liệu
+                    doan.XoaNhanVien(nhanvien);
                 }
 
                 //Hiển thị lại giao diện
                 load_dsNhanVien(doan.DsNhanVien);
+
             }
             else
             {
                 MessageBox.Show("Chưa chọn nhân viên để xóa", "Thông báo");
             }
         }
-        private void btn_LuuNhanVien_Click(object sender, EventArgs e)
-        {
-            //Lưu dữ liệu lên đoàn
 
-        }
         #endregion
 
         #region Chi phí
@@ -513,9 +588,13 @@ namespace QuanLyTour.GUI
                 DoanBUS doan = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
 
                 //Lấy chi phí từ giao diện
-                doan.DsChiPhi.Add(getChiPhi());
+                ChiPhiBUS chiphi = getChiPhi();
 
-                //Thêm vào đoàn đang chọn
+                //Thêm vào cơ sở dữ liệu
+                doan.ThemChiPhi(chiphi);
+
+                //Thêm vào đoàn đang chọn và hiển thị lại giao diện
+                doan.DsChiPhi.Add(chiphi);
                 load_dsChiPhi(doan.DsChiPhi);
             }
             else
@@ -531,9 +610,15 @@ namespace QuanLyTour.GUI
                 DoanBUS doan = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
 
                 //Xóa từng chi phí được chọn
-                foreach (DataGridViewRow chiphi in grid_dsChiPhi.SelectedRows)
+                foreach (DataGridViewRow row in grid_dsChiPhi.SelectedRows)
                 {
-                    doan.DsChiPhi.Remove((ChiPhiBUS)chiphi.DataBoundItem);
+                    ChiPhiBUS chiphi = (ChiPhiBUS)row.DataBoundItem;
+
+                    doan.DsChiPhi.Remove(chiphi);
+
+                    //Xóa trong cơ sở dữ liệu
+                    chiphi.Xoa();
+
                 }
 
                 //Hiển thị lại giao diện
@@ -551,16 +636,19 @@ namespace QuanLyTour.GUI
             {
                 DoanBUS doan = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
 
-                //Lấy chi phí từ giao diện
+                //lấy chi phí từ giao diện
                 ChiPhiBUS chiphimoi = getChiPhi();
 
-                //Lấy chi phí đang chọn
+                //lấy chi phí đang chọn
                 ChiPhiBUS chiphicu = (ChiPhiBUS)grid_dsChiPhi.CurrentRow.DataBoundItem;
 
-                //Đặt tất cả thông tin của chi phí cũ thành chi phí mới
+                //đặt tất cả thông tin của chi phí cũ thành chi phí mới
                 chiphicu.LoaiChiPhi = chiphimoi.LoaiChiPhi;
                 chiphicu.Thoigian = chiphimoi.Thoigian;
                 chiphicu.Tien = chiphimoi.Tien;
+
+                //Cập nhật trong cơ sở dữ liệu
+                chiphicu.Sua();
 
                 //Hiển thị lại giao diện
                 load_dsChiPhi(doan.DsChiPhi);
@@ -583,6 +671,8 @@ namespace QuanLyTour.GUI
             grid_dsTour.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             grid_dsTour.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             grid_dsTour.ClearSelection();
+
+            load_cb_dsTour(dsTour);
         }
         void load_dsLoaiTour(List<LoaiTourBUS> dsLoaiTour)
         {
@@ -621,6 +711,8 @@ namespace QuanLyTour.GUI
             {
                 grid_dsGia.DataSource = dsGia;
                 grid_dsGia.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                grid_dsGia.Columns["maTour"].Visible = false;
+                grid_dsGia.Columns["id"].Visible = false;
                 grid_dsGia.ClearSelection();
             }
         }
@@ -640,16 +732,20 @@ namespace QuanLyTour.GUI
             grid_dsDoan.Columns["tour"].Visible = false;
 
             grid_dsDoan.ClearSelection();
+
+            load_dsChiPhi(null);
+            load_dsKhachHang(null);
+            load_dsNhanVien(null);
         }
         void load_dsChiPhi(List<ChiPhiBUS> dsChiPhi)
         {
 
             grid_dsChiPhi.DataSource = null;
-            if (dsChiPhi.Count > 0)
+            if (dsChiPhi != null && dsChiPhi.Count > 0)
             {
                 grid_dsChiPhi.DataSource = dsChiPhi;
-                grid_dsChiPhi.Columns["doan"].Visible = false;
                 grid_dsChiPhi.Columns["loaiChiPhi"].Visible = false;
+                grid_dsChiPhi.Columns["maChiphi"].Visible = false;
                 grid_dsChiPhi.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 grid_dsChiPhi.ClearSelection();
             }
@@ -664,11 +760,13 @@ namespace QuanLyTour.GUI
         void load_dsKhachHang(List<KhachHangBUS> dsKhachHang)
         {
             grid_dsKhachHang.DataSource = null;
-            if (dsKhachHang.Count > 0)
+            if (dsKhachHang != null && dsKhachHang.Count > 0)
             {
                 grid_dsKhachHang.DataSource = dsKhachHang;
                 grid_dsKhachHang.Columns["doan"].Visible = false;
                 grid_dsKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                grid_dsKhachHang.Columns["tenkhachhang"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 grid_dsKhachHang.ClearSelection();
             }
 
@@ -676,7 +774,7 @@ namespace QuanLyTour.GUI
         void load_dsNhanVien(List<NhanVienBUS> dsNhanVien)
         {
             grid_dsNhanVien.DataSource = null;
-            if (dsNhanVien.Count > 0)
+            if (dsNhanVien != null && dsNhanVien.Count > 0)
             {
                 grid_dsNhanVien.DataSource = dsNhanVien;
                 grid_dsNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -684,6 +782,13 @@ namespace QuanLyTour.GUI
                 grid_dsNhanVien.ClearSelection();
             }
         }
+        void load_cb_dsTour(List<TourBUS> dsTour)
+        {
+            comboBox_Tour.DataSource = dsTour;
+            comboBox_Tour.DisplayMember = "tenTour";
+            comboBox_Tour.ValueMember = "maTour";
+        }
+
         #endregion
 
         #region getDataGUI
@@ -694,6 +799,10 @@ namespace QuanLyTour.GUI
             gia.Tien = (long)txt_Gia.Value;
             gia.NgayBatDau = datetime_batdauGia.Value;
             gia.NgayKetThuc = datetime_ketthucGia.Value;
+            gia.MaTour = grid_dsTour.CurrentRow.Cells["maTour"].Value.ToString();
+
+            if (grid_dsGia.SelectedRows.Count > 0)
+                gia.Id = int.Parse(grid_dsGia.CurrentRow.Cells["id"].Value.ToString());
 
             return gia;
         }
@@ -706,7 +815,6 @@ namespace QuanLyTour.GUI
             return chiphi;
 
         }
-
         DoanBUS getDoan()
         {
             DoanBUS doan = new DoanBUS();

@@ -70,7 +70,6 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBox_Tour = new System.Windows.Forms.ComboBox();
-            this.btn_LuuDoan = new System.Windows.Forms.Button();
             this.btn_SuaDoan = new System.Windows.Forms.Button();
             this.btn_XoaDoan = new System.Windows.Forms.Button();
             this.btn_ThemDoan = new System.Windows.Forms.Button();
@@ -118,6 +117,8 @@
             this.btn_themTour = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_dsTour)).BeginInit();
@@ -155,6 +156,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.tabPage8.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
@@ -263,9 +265,9 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(312, 212);
+            this.button8.Location = new System.Drawing.Point(324, 212);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(126, 25);
+            this.button8.Size = new System.Drawing.Size(119, 25);
             this.button8.TabIndex = 5;
             this.button8.Text = "Tìm kiếm";
             this.button8.UseVisualStyleBackColor = true;
@@ -575,13 +577,12 @@
             this.textBox5.Location = new System.Drawing.Point(6, 212);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(300, 24);
+            this.textBox5.Size = new System.Drawing.Size(312, 24);
             this.textBox5.TabIndex = 4;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.panel5);
-            this.groupBox4.Controls.Add(this.btn_LuuDoan);
             this.groupBox4.Controls.Add(this.btn_SuaDoan);
             this.groupBox4.Controls.Add(this.btn_XoaDoan);
             this.groupBox4.Controls.Add(this.btn_ThemDoan);
@@ -617,26 +618,18 @@
             // 
             // comboBox_Tour
             // 
+            this.comboBox_Tour.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Tour.FormattingEnabled = true;
             this.comboBox_Tour.Location = new System.Drawing.Point(86, 8);
             this.comboBox_Tour.Name = "comboBox_Tour";
             this.comboBox_Tour.Size = new System.Drawing.Size(342, 22);
             this.comboBox_Tour.TabIndex = 29;
             // 
-            // btn_LuuDoan
-            // 
-            this.btn_LuuDoan.Location = new System.Drawing.Point(303, 168);
-            this.btn_LuuDoan.Name = "btn_LuuDoan";
-            this.btn_LuuDoan.Size = new System.Drawing.Size(116, 25);
-            this.btn_LuuDoan.TabIndex = 28;
-            this.btn_LuuDoan.Text = "Lưu đoàn";
-            this.btn_LuuDoan.UseVisualStyleBackColor = true;
-            // 
             // btn_SuaDoan
             // 
-            this.btn_SuaDoan.Location = new System.Drawing.Point(213, 168);
+            this.btn_SuaDoan.Location = new System.Drawing.Point(215, 168);
             this.btn_SuaDoan.Name = "btn_SuaDoan";
-            this.btn_SuaDoan.Size = new System.Drawing.Size(84, 25);
+            this.btn_SuaDoan.Size = new System.Drawing.Size(100, 25);
             this.btn_SuaDoan.TabIndex = 27;
             this.btn_SuaDoan.Text = "Sửa đoàn";
             this.btn_SuaDoan.UseVisualStyleBackColor = true;
@@ -644,9 +637,9 @@
             // 
             // btn_XoaDoan
             // 
-            this.btn_XoaDoan.Location = new System.Drawing.Point(93, 168);
+            this.btn_XoaDoan.Location = new System.Drawing.Point(109, 168);
             this.btn_XoaDoan.Name = "btn_XoaDoan";
-            this.btn_XoaDoan.Size = new System.Drawing.Size(116, 25);
+            this.btn_XoaDoan.Size = new System.Drawing.Size(100, 25);
             this.btn_XoaDoan.TabIndex = 26;
             this.btn_XoaDoan.Text = "Xóa đoàn";
             this.btn_XoaDoan.UseVisualStyleBackColor = true;
@@ -656,7 +649,7 @@
             // 
             this.btn_ThemDoan.Location = new System.Drawing.Point(3, 168);
             this.btn_ThemDoan.Name = "btn_ThemDoan";
-            this.btn_ThemDoan.Size = new System.Drawing.Size(84, 25);
+            this.btn_ThemDoan.Size = new System.Drawing.Size(100, 25);
             this.btn_ThemDoan.TabIndex = 25;
             this.btn_ThemDoan.Text = "Thêm đoàn";
             this.btn_ThemDoan.UseVisualStyleBackColor = true;
@@ -790,6 +783,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -997,37 +991,39 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 23);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(754, 476);
+            this.tabPage6.Size = new System.Drawing.Size(451, 476);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Địa điểm";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // btn_themDiaDiemTour
             // 
+            this.btn_themDiaDiemTour.BackgroundImage = global::QuanLyTour.Properties.Resources.fast_forward;
+            this.btn_themDiaDiemTour.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_themDiaDiemTour.Location = new System.Drawing.Point(177, 58);
             this.btn_themDiaDiemTour.Name = "btn_themDiaDiemTour";
             this.btn_themDiaDiemTour.Size = new System.Drawing.Size(87, 36);
             this.btn_themDiaDiemTour.TabIndex = 30;
-            this.btn_themDiaDiemTour.Text = "=>";
             this.btn_themDiaDiemTour.UseVisualStyleBackColor = true;
             this.btn_themDiaDiemTour.Click += new System.EventHandler(this.btn_themDiaDiemTour_Click);
             // 
             // btn_xoaDiaDiemTour
             // 
+            this.btn_xoaDiaDiemTour.BackgroundImage = global::QuanLyTour.Properties.Resources.fast_backward;
+            this.btn_xoaDiaDiemTour.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_xoaDiaDiemTour.Location = new System.Drawing.Point(177, 100);
             this.btn_xoaDiaDiemTour.Name = "btn_xoaDiaDiemTour";
             this.btn_xoaDiaDiemTour.Size = new System.Drawing.Size(87, 36);
             this.btn_xoaDiaDiemTour.TabIndex = 29;
-            this.btn_xoaDiaDiemTour.Text = "<=";
             this.btn_xoaDiaDiemTour.UseVisualStyleBackColor = true;
             this.btn_xoaDiaDiemTour.Click += new System.EventHandler(this.btn_xoaDiaDiemTour_Click);
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.listBox_dsDiaDiemTour);
-            this.groupBox5.Location = new System.Drawing.Point(303, 6);
+            this.groupBox5.Location = new System.Drawing.Point(270, 6);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(126, 298);
+            this.groupBox5.Size = new System.Drawing.Size(159, 298);
             this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Địa điểm của tour";
@@ -1039,7 +1035,7 @@
             this.listBox_dsDiaDiemTour.ItemHeight = 14;
             this.listBox_dsDiaDiemTour.Location = new System.Drawing.Point(3, 20);
             this.listBox_dsDiaDiemTour.Name = "listBox_dsDiaDiemTour";
-            this.listBox_dsDiaDiemTour.Size = new System.Drawing.Size(119, 270);
+            this.listBox_dsDiaDiemTour.Size = new System.Drawing.Size(150, 270);
             this.listBox_dsDiaDiemTour.Sorted = true;
             this.listBox_dsDiaDiemTour.TabIndex = 0;
             this.listBox_dsDiaDiemTour.ValueMember = "maDiaDiem";
@@ -1049,7 +1045,7 @@
             this.groupBox3.Controls.Add(this.listBox_dsDiaDiem);
             this.groupBox3.Location = new System.Drawing.Point(6, 6);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(126, 298);
+            this.groupBox3.Size = new System.Drawing.Size(165, 298);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Danh sách địa điểm";
@@ -1061,7 +1057,7 @@
             this.listBox_dsDiaDiem.ItemHeight = 14;
             this.listBox_dsDiaDiem.Location = new System.Drawing.Point(3, 20);
             this.listBox_dsDiaDiem.Name = "listBox_dsDiaDiem";
-            this.listBox_dsDiaDiem.Size = new System.Drawing.Size(119, 270);
+            this.listBox_dsDiaDiem.Size = new System.Drawing.Size(156, 270);
             this.listBox_dsDiaDiem.Sorted = true;
             this.listBox_dsDiaDiem.TabIndex = 0;
             this.listBox_dsDiaDiem.ValueMember = "maDiaDiem";
@@ -1117,6 +1113,25 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(210, 37);
             this.panel6.TabIndex = 13;
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.richTextBox1);
+            this.tabPage8.Location = new System.Drawing.Point(4, 23);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(1159, 659);
+            this.tabPage8.TabIndex = 2;
+            this.tabPage8.Text = "Thống kê";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(338, 93);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(464, 229);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "Giá hiện tại chưa lấy ra sau khi xóa 1 giá\nThống kê\nQuản lý nhân viên?\nQuản lý Kh" +
+    "ách hàng?\nTìm kiếm?";
             // 
             // Main2
             // 
@@ -1183,6 +1198,7 @@
             this.groupBox1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1277,7 +1293,8 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBox_Tour;
-        private System.Windows.Forms.Button btn_LuuDoan;
         private System.Windows.Forms.Button btn_SuaDoan;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }

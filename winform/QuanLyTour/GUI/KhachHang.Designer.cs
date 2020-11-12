@@ -75,7 +75,7 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btn_them;
         public System.Windows.Forms.DataGridView grid_dsKhachHang;
+        public System.Windows.Forms.Button btn_them;
     }
 }

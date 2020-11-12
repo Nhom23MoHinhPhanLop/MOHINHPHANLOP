@@ -63,5 +63,38 @@ namespace QuanLyTour.DAO
 
             return dsDiaDiem;
         }
+
+        public static void ThemVaoTour(DiaDiemBUS diadiem, TourBUS tour)
+        {
+            String query = "insert into ChiTietTour (maTour,maDiaDiem) values (@matour,@madiadiem)";
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
+            {
+
+                connection.open();
+
+                command.Parameters.AddWithValue("@matour", tour.MaTour);
+                command.Parameters.AddWithValue("@madiadiem", diadiem.MaDiaDiem);
+                command.ExecuteNonQuery();
+
+                connection.close();
+            }
+        }
+        public static void XoaTrongTour(DiaDiemBUS diadiem, TourBUS tour)
+        {
+            String query = "delete ChiTietTour where maDiaDiem=@madiadiem and maTour=@matour";
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
+            {
+
+                connection.open();
+
+                command.Parameters.AddWithValue("@matour", tour.MaTour);
+                command.Parameters.AddWithValue("@madiadiem", diadiem.MaDiaDiem);
+                command.ExecuteNonQuery();
+
+                connection.close();
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace QuanLyTour.BUS
 {
     public class KhachHangBUS
     {
+        #region Properties
         private String maKhachHang;
         private String tenKhachHang;
         private String cmnd;
@@ -16,11 +17,15 @@ namespace QuanLyTour.BUS
         private String sdt;
         private String gioitinh;
         private String quoctich;
+
         DoanBUS doan;
         public KhachHangBUS()
         {
             doan = new DoanBUS();
         }
+        #endregion
+
+        #region Get set
         public string MaKhachHang { get => maKhachHang; set => maKhachHang = value; }
         public string TenKhachHang { get => tenKhachHang; set => tenKhachHang = value; }
         public string Cmnd { get => cmnd; set => cmnd = value; }
@@ -29,6 +34,9 @@ namespace QuanLyTour.BUS
         public string Gioitinh { get => gioitinh; set => gioitinh = value; }
         public string Quoctich { get => quoctich; set => quoctich = value; }
         public DoanBUS Doan { get => doan; set => doan = value; }
+        #endregion
+
+        #region Function
         public static List<KhachHangBUS> getKhachHangByDoan(DoanBUS doan)
         {
             return DAO.KhachHangDAO.getKhachHangByDoan(doan);
@@ -41,5 +49,20 @@ namespace QuanLyTour.BUS
         {
             DAO.KhachHangDAO.ThemKhachHangDoan(doan, dsKhachHang);
         }
+       
+        public void Xoa(DoanBUS doan)
+        {
+            DAO.KhachHangDAO.Xoa(this, doan);
+        }
+
+        public void Them(DoanBUS doan)
+        {
+            DAO.KhachHangDAO.Them(this, doan);
+        }
+        #endregion
+
+
+
+
     }
 }

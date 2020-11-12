@@ -86,5 +86,38 @@ namespace QuanLyTour.DAO
                 connection.close();
             }
         }
+        public static void Xoa(KhachHangBUS khachhang, DoanBUS doan)
+        {
+
+            String query = "delete thamgia where maKhachHang=@makhachhang and maDoan=@madoan";
+            Connection connect = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
+            {
+                command.Parameters.AddWithValue("@makhachhang", khachhang.MaKhachHang);
+                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
+
+                connect.open();
+
+                command.ExecuteNonQuery();
+
+                connect.close();
+            }
+        }
+        public static void Them(KhachHangBUS khachhang, DoanBUS doan)
+        {
+
+            String query = "insert into thamgia (maKhachHang,maDoan) values (@makhachhang,@madoan)";
+            Connection connect = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
+            {
+                command.Parameters.AddWithValue("@makhachhang", khachhang.MaKhachHang);
+                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
+
+                connect.open();
+                command.ExecuteNonQuery();
+
+                connect.close();
+            }
+        }
     }
 }
