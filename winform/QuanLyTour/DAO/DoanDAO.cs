@@ -1,10 +1,13 @@
-﻿using QuanLyTour.BUS;
+﻿using Newtonsoft.Json.Linq;
+using QuanLyTour.BUS;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace QuanLyTour.DAO
 {
@@ -13,7 +16,7 @@ namespace QuanLyTour.DAO
         public static List<DoanBUS> getAll()
         {
             List<DoanBUS> list = new List<DoanBUS>();
-            String query = "select * from Doan";
+            String query = "select * from Doan,Tour where Doan.maTour=Tour.maTour";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
@@ -29,6 +32,7 @@ namespace QuanLyTour.DAO
                     doan.NgayBatDau = DateTime.Parse(reader["ngayBatDau"].ToString());
                     doan.NgayKetThuc = DateTime.Parse(reader["ngayKetThuc"].ToString());
                     doan.Tour.MaTour = reader["maTour"].ToString();
+                    doan.Tour.TenTour = reader["tenTour"].ToString();
                     list.Add(doan);
                 }
                 reader.Close();
@@ -37,25 +41,7 @@ namespace QuanLyTour.DAO
             return list;
         }
 
-        public static void Them(DoanBUS doan)
-        {
-            String query = "insert into doan (maDoan,tenDoan,ngayBatDau,ngayKetThuc,maTour) values( @madoan,@tendoan,@ngaybatdau,@ngayketthuc,@matour)";
-            Connection connect = new Connection();
-            using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
-            {
-                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
-                command.Parameters.AddWithValue("@tendoan", doan.TenDoan);
-                command.Parameters.AddWithValue("@ngaybatdau", doan.NgayBatDau);
-                command.Parameters.AddWithValue("@ngayketthuc", doan.NgayKetThuc);
-                command.Parameters.AddWithValue("@matour", doan.Tour.MaTour);
 
-                connect.open();
-
-                command.ExecuteNonQuery();
-
-                connect.close();
-            }
-        }
         public static bool KiemTraTonTai(DoanBUS doan)
         {
             int result = 0;
@@ -76,8 +62,30 @@ namespace QuanLyTour.DAO
 
             return result == 1;
         }
-        public static void Xoa(DoanBUS doan)
+        public static bool Them(DoanBUS doan)
         {
+            int result = 0;
+            String query = "insert into doan (maDoan,tenDoan,ngayBatDau,ngayKetThuc,maTour) values( @madoan,@tendoan,@ngaybatdau,@ngayketthuc,@matour)";
+            Connection connect = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
+            {
+                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
+                command.Parameters.AddWithValue("@tendoan", doan.TenDoan);
+                command.Parameters.AddWithValue("@ngaybatdau", doan.NgayBatDau);
+                command.Parameters.AddWithValue("@ngayketthuc", doan.NgayKetThuc);
+                command.Parameters.AddWithValue("@matour", doan.Tour.MaTour);
+
+                connect.open();
+
+                result = command.ExecuteNonQuery();
+
+                connect.close();
+            }
+            return result == 1;
+        }
+        public static bool Xoa(DoanBUS doan)
+        {
+            int result = 0;
             String query = "delete doan where maDoan=@madoan";
             Connection connect = new Connection();
             using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
@@ -86,13 +94,15 @@ namespace QuanLyTour.DAO
 
                 connect.open();
 
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connect.close();
             }
+            return result == 1;
         }
-        public static void Sua(DoanBUS doancu, DoanBUS doan)
+        public static bool Sua(DoanBUS doancu, DoanBUS doan)
         {
+            int result = 0;
             String query = "update doan set maDoan=@madoan, tenDoan=@tendoan, ngayBatDau=@ngaybatdau, ngayKetThuc=@ngayketthuc, maTour=@matour where maDoan=@madoancu";
             Connection connect = new Connection();
             using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
@@ -106,10 +116,35 @@ namespace QuanLyTour.DAO
 
                 connect.open();
 
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connect.close();
             }
+            return result == 1;
         }
+
+
+        public static DataTable ThongKeDoanhThu(String matour,DateTime ngaybd, DateTime ngaykt)
+        {
+            DataTable result = new DataTable();
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand("proc_thongkedoanhthudoanbytour", connection.getConnection()))
+            {
+
+                connection.open();
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ngaybd", ngaybd);
+                command.Parameters.AddWithValue("@ngaykt", ngaykt);
+                command.Parameters.AddWithValue("@matour", matour);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                adapter.Fill(result);
+                connection.close();
+            }
+
+            return result;
+        }
+
     }
 }

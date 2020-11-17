@@ -68,7 +68,34 @@ namespace QuanLyTour.DAO
             }
             return dsKhachHang;
         }
+        public static List<KhachHangBUS> getAll()
+        {
+            List<KhachHangBUS> dsKhachHang = new List<KhachHangBUS>();
+            String query = "select maKhachHang,tenKhachHang, sdt,gioitinh,diachi,cmnd" +
+                        " from KhachHang";
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
+            {
 
+                connection.open();
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    KhachHangBUS khachhang = new KhachHangBUS();
+                    khachhang.MaKhachHang = reader["maKhachHang"].ToString();
+                    khachhang.TenKhachHang = reader["tenKhachHang"].ToString();
+                    khachhang.Gioitinh = reader["gioitinh"].ToString();
+                    khachhang.Cmnd = reader["cmnd"].ToString();
+                    khachhang.Diachi = reader["diachi"].ToString();
+                    khachhang.Sdt = reader["sdt"].ToString();
+                    dsKhachHang.Add(khachhang);
+                }
+                reader.Close();
+                connection.close();
+            }
+            return dsKhachHang;
+        }
         public static void ThemKhachHangDoan(DoanBUS doan, List<KhachHangBUS> dsKhachHang)
         {
             String query = "insert into ThamGia (maDoan,maKhachHang) values ";
@@ -86,9 +113,9 @@ namespace QuanLyTour.DAO
                 connection.close();
             }
         }
-        public static void Xoa(KhachHangBUS khachhang, DoanBUS doan)
+        public static bool XoaKhoiDoan(KhachHangBUS khachhang, DoanBUS doan)
         {
-
+            int result = 0;
             String query = "delete thamgia where maKhachHang=@makhachhang and maDoan=@madoan";
             Connection connect = new Connection();
             using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
@@ -98,14 +125,15 @@ namespace QuanLyTour.DAO
 
                 connect.open();
 
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connect.close();
             }
+            return result == 1;
         }
-        public static void Them(KhachHangBUS khachhang, DoanBUS doan)
+        public static bool ThemVaoDoan(KhachHangBUS khachhang, DoanBUS doan)
         {
-
+            int result = 0;
             String query = "insert into thamgia (maKhachHang,maDoan) values (@makhachhang,@madoan)";
             Connection connect = new Connection();
             using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
@@ -114,10 +142,97 @@ namespace QuanLyTour.DAO
                 command.Parameters.AddWithValue("@madoan", doan.MaDoan);
 
                 connect.open();
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connect.close();
             }
+            return result == 1;
+        }
+        public static bool KiemTraTonTai(KhachHangBUS khachhang)
+        {
+            int result = 0;
+            String query = "select count(*) as counts from KhachHang where maKhachHang=@maKhachHang";
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
+            {
+
+                connection.open();
+                command.Parameters.AddWithValue("@maKhachHang", khachhang.MaKhachHang);
+                var reader = command.ExecuteReader();
+                reader.Read();
+
+                result = int.Parse(reader["counts"].ToString());
+
+                reader.Close();
+                connection.close();
+            }
+
+            return result == 1;
+        }
+        public static bool them(KhachHangBUS khachhang)
+        {
+            int result = 0;
+            String query = "insert into KhachHang (maKhachHang,tenKhachHang,sdt,cmnd,diachi,gioitinh) " +
+                                         "values (@maKhachHang,@tenKhachHang,@sdt,@cmnd,@diachi,@gioitinh)";
+            Connection connect = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
+            {
+                command.Parameters.AddWithValue("@maKhachHang", khachhang.MaKhachHang);
+                command.Parameters.AddWithValue("@tenKhachHang", khachhang.TenKhachHang);
+                command.Parameters.AddWithValue("@sdt", khachhang.Sdt);
+                command.Parameters.AddWithValue("@cmnd", khachhang.Cmnd);
+                command.Parameters.AddWithValue("@diachi", khachhang.Diachi);
+                command.Parameters.AddWithValue("@gioitinh", khachhang.Gioitinh);
+
+                connect.open();
+                result = command.ExecuteNonQuery();
+
+                connect.close();
+            }
+            return result == 1;
+        }
+        public static bool xoa(KhachHangBUS khachhang)
+        {
+            int result = 0;
+
+            String query = "delete from KhachHang where maKhachHang=@makhachhang";
+            Connection connect = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
+            {
+                command.Parameters.AddWithValue("@makhachhang", khachhang.MaKhachHang);
+
+                connect.open();
+                result = command.ExecuteNonQuery();
+
+                connect.close();
+            }
+            return result == 1;
+
+        }
+        public static bool sua(KhachHangBUS khachhangcu, KhachHangBUS khachhangmoi)
+        {
+            int result = 0;
+
+            String query = "update KhachHang set maKhachHang =@maKhachHang,tenKhachHang=@tenKhachHang,sdt=@sdt,cmnd=@cmnd," +
+                "diachi=@diachi,gioitinh=@gioitinh where maKhachHang=@maKhachHangcu";
+            Connection connect = new Connection();
+            using (SqlCommand command = new SqlCommand(query, connect.getConnection()))
+            {
+                command.Parameters.AddWithValue("@maKhachHang", khachhangmoi.MaKhachHang);
+                command.Parameters.AddWithValue("@tenKhachHang", khachhangmoi.TenKhachHang);
+                command.Parameters.AddWithValue("@sdt", khachhangmoi.Sdt);
+                command.Parameters.AddWithValue("@cmnd", khachhangmoi.Cmnd);
+                command.Parameters.AddWithValue("@diachi", khachhangmoi.Diachi);
+                command.Parameters.AddWithValue("@gioitinh", khachhangmoi.Gioitinh);
+                command.Parameters.AddWithValue("@maKhachHangcu", khachhangcu.MaKhachHang);
+
+                connect.open();
+                result = command.ExecuteNonQuery();
+
+                connect.close();
+            }
+            return result == 1;
+
         }
     }
 }

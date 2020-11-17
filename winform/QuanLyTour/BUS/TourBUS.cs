@@ -15,9 +15,11 @@ namespace QuanLyTour.BUS
         List<GiaBUS> dsGia;
         List<DoanBUS> dsDoan;
         List<DiaDiemBUS> dsDiaDiem;
+        private long doanhthu = 0;
         public TourBUS()
         {
             maTour = "";
+            tenTour = "";
             loaiTour = new LoaiTourBUS();
             dsDiaDiem = new List<DiaDiemBUS>();
             dsDoan = new List<DoanBUS>();
@@ -31,24 +33,25 @@ namespace QuanLyTour.BUS
         public List<DoanBUS> DsDoan { get => dsDoan; set => dsDoan = value; }
         public List<DiaDiemBUS> DsDiaDiem { get => dsDiaDiem; set => dsDiaDiem = value; }
         public GiaBUS GiaHienTai { get => giaHienTai; set => giaHienTai = value; }
-
+        public long Doanhthu { get => doanhthu; set => doanhthu = value; }
 
         public bool isExist()
         {
             return TourDAO.kiemtraTourTonTai(this);
         }
-
-        public void Them()
+        public bool Them()
         {
-            TourDAO.Them(this);
+            return !isExist() && TourDAO.Them(this);
         }
-        public void Xoa()
+        public bool Xoa()
         {
-            TourDAO.Xoa(this);
+            return TourDAO.Xoa(this);
         }
-        public void Sua(TourBUS tourmoi)
+        public bool Sua(TourBUS tourmoi)
         {
-            TourDAO.Sua(this, tourmoi);
+            if (tourmoi.isExist() && this.MaTour != tourmoi.MaTour)
+                return false;
+            return TourDAO.Sua(this, tourmoi);
         }
 
         public void ThemDiaDiem(DiaDiemBUS diadiem)
@@ -63,34 +66,51 @@ namespace QuanLyTour.BUS
 
             diadiem.XoaTrongTour(this);
         }
-
-        public void ThemGia(GiaBUS gia)
+        public bool ThemGia(GiaBUS gia)
         {
-            this.dsGia.Add(gia);
-
-            gia.Them();
+            bool result = gia.Them();
+            if (result)
+                this.dsGia.Add(gia);
+            return result;
         }
-        public void XoaGia(GiaBUS gia)
+        public bool XoaGia(GiaBUS gia)
         {
-            this.dsGia.Remove(gia);
-
-            gia.Xoa();
+            bool result = gia.Xoa();
+            if (result)
+                this.dsGia.Remove(gia);
+            return result;
         }
-        public void SuaGia(GiaBUS gia)
+        public bool SuaGia(GiaBUS gia)
         {
-
-            for (int i = 0; i < this.dsGia.Count; i++)
+            bool result = gia.Sua();
+            if (result)
             {
-                if (dsGia[i].Id == gia.Id)
+                for (int i = 0; i < this.dsGia.Count; i++)
                 {
-                    this.dsGia[i] = gia;
-                    break;
+                    if (dsGia[i].Id == gia.Id)
+                    {
+                        this.dsGia[i] = gia;
+                        break;
+                    }
                 }
             }
-
-            gia.Sua();
+            return result;
         }
 
 
+        public override string ToString()
+        {
+            return this.TenTour;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -9,7 +9,6 @@ namespace QuanLyTour.BUS
 {
     public class ChiPhiBUS
     {
-        #region Properties
         private int maChiPhi;
         private long tien;
         private DateTime thoigian;
@@ -18,38 +17,30 @@ namespace QuanLyTour.BUS
         {
             this.LoaiChiPhi = new LoaiChiPhiBUS();
         }
-        #endregion
 
-        #region Get Set
         public long Tien { get => tien; set => tien = value; }
         public LoaiChiPhiBUS LoaiChiPhi { get => loaiChiPhi; set => loaiChiPhi = value; }
         public DateTime Thoigian { get => thoigian; set => thoigian = value; }
         public int MaChiPhi { get => maChiPhi; set => maChiPhi = value; }
+        
 
-        #endregion
-
-        #region Function
         public static List<ChiPhiBUS> getChiPhiByDoan(DoanBUS doan)
         {
             return ChiPhiDAO.getChiPhiByDoan(doan);
         }
-     
-
-        public void Them(DoanBUS doan)
+        public bool Them(DoanBUS doan)
         {
-            ChiPhiDAO.Them(this, doan);
+            return ChiPhiDAO.Them(this, doan);
         }
-        public void Xoa()
+        public bool Xoa()
         {
-            ChiPhiDAO.Xoa(this);
+            return ChiPhiDAO.Xoa(this);
         }
-        public void Sua()
+        public bool Sua()
         {
-            ChiPhiDAO.Sua(this);
+            return ChiPhiDAO.Sua(this);
         }
-        #endregion
 
-
-
+       
     }
 }

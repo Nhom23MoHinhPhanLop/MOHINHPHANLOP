@@ -15,7 +15,7 @@ namespace QuanLyTour.DAO
             List<ChiPhiBUS> dsChiPhi = new List<ChiPhiBUS>();
             Connection connection = new Connection();
 
-            String query = "select * from ChiPhi where maDoan=@madoan";
+            String query = "select * from ChiPhi,LoaiChiPhi where maDoan=@madoan and ChiPhi.maLoaiChiPhi=LoaiChiPhi.maLoaiChiPhi";
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
                 connection.open();
@@ -29,6 +29,7 @@ namespace QuanLyTour.DAO
                     chiphi.Thoigian = DateTime.Parse(reader["thoigian"].ToString());
                     chiphi.Tien = long.Parse(reader["tien"].ToString());
                     chiphi.LoaiChiPhi.MaLoaiChiPhi = reader["maLoaiChiPhi"].ToString();
+                    chiphi.LoaiChiPhi.TenLoaiChiPhi = reader["tenLoaiChiPhi"].ToString();
                     dsChiPhi.Add(chiphi);
                 }
                 connection.close();
@@ -36,8 +37,9 @@ namespace QuanLyTour.DAO
 
             return dsChiPhi;
         }
-        public static void Them(ChiPhiBUS chiphi, DoanBUS doan)
+        public static bool Them(ChiPhiBUS chiphi, DoanBUS doan)
         {
+            int result = 0;
             Connection connection = new Connection();
 
             String query = "insert into ChiPhi (tien,maLoaiChiPhi,maDoan,thoigian) values (@sotien,@maloaichiphi,@madoan,@thoigian)";
@@ -49,27 +51,29 @@ namespace QuanLyTour.DAO
                 command.Parameters.AddWithValue("@maloaichiphi", chiphi.LoaiChiPhi.MaLoaiChiPhi);
                 command.Parameters.AddWithValue("@madoan", doan.MaDoan);
 
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connection.close();
             }
-            using (SqlCommand command = new SqlCommand("select max(maChiPhi) as myid from ChiPhi", connection.getConnection()))
-            {
-                connection.open();
+            if (result == 1)
+                using (SqlCommand command = new SqlCommand("select max(maChiPhi) as myid from ChiPhi", connection.getConnection()))
+                {
+                    connection.open();
 
-                var reader = command.ExecuteReader();
-                reader.Read();
+                    var reader = command.ExecuteReader();
+                    reader.Read();
 
-                chiphi.MaChiPhi = int.Parse(reader["myid"].ToString());
+                    chiphi.MaChiPhi = int.Parse(reader["myid"].ToString());
 
-                connection.close();
+                    connection.close();
 
-            }
-           
+                }
+            return result == 1;
 
         }
-        public static void Xoa(ChiPhiBUS chiphi)
+        public static bool Xoa(ChiPhiBUS chiphi)
         {
+            int result = 0;
             Connection connection = new Connection();
 
             String query = "delete ChiPhi where maChiphi=@machiphi";
@@ -77,13 +81,15 @@ namespace QuanLyTour.DAO
             {
                 connection.open();
                 command.Parameters.AddWithValue("@machiphi", chiphi.MaChiPhi);
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connection.close();
             }
+            return result == 1;
         }
-        public static void Sua(ChiPhiBUS chiphi)
+        public static bool Sua(ChiPhiBUS chiphi)
         {
+            int result = 0;
             Connection connection = new Connection();
 
             String query = "update ChiPhi set tien=@sotien,thoigian=@thoigian,maLoaiChiPhi=@maloaichiphi where maChiphi=@machiphi";
@@ -95,10 +101,11 @@ namespace QuanLyTour.DAO
                 command.Parameters.AddWithValue("@thoigian", chiphi.Thoigian);
                 command.Parameters.AddWithValue("@maloaichiphi", chiphi.LoaiChiPhi.MaLoaiChiPhi);
 
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connection.close();
             }
+            return result == 1;
         }
 
     }

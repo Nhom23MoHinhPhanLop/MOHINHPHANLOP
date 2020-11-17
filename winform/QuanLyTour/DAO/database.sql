@@ -63,6 +63,7 @@ create table KhachHang(
 	tenKhachHang nvarchar(200),
 	gioitinh nvarchar(20),
 	cmnd varchar(20),
+	ngaysinh date,
 	diachi nvarchar(200),
 	sdt varchar(20),
 );
@@ -81,6 +82,7 @@ create table NhanVien(
 	tenNhanVien nvarchar(200),
 	gioitinh nvarchar(20),
 	cmnd varchar(20),
+	ngaysinh date,
 	diachi nvarchar(200),
 	sdt varchar(20),
 	maChucVu varchar(20) foreign key references ChucVu(maChucVu)  on update cascade on delete cascade
@@ -297,4 +299,18 @@ values	('NV1','DOAN1'),
 		('NV7','DOAN4'),
 		('NV6','DOAN5');
 go
-select COUNT(*) as counts from Doan where maDoan='DOAN12'
+
+
+create proc proc_getCurrentPrice @matour varchar(20)
+as
+begin
+	declare @homnay datetime = getDate()
+	if exists (select * from Gia where maTour =@matour and ngayBatDau<=@homnay and ngayKetThuc>= @homnay)
+	begin
+		select * from Gia where maTour =@matour and ngayBatDau<=@homnay and ngayKetThuc>= @homnay
+	end
+	else
+	begin
+		select * from Gia where maTour =@matour and ngayKetThuc = (select max(ngayKetThuc) from Gia where maTour=@matour)
+	end
+end

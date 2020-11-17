@@ -9,7 +9,7 @@ namespace QuanLyTour.BUS
 {
     public class KhachHangBUS
     {
-        #region Properties
+
         private String maKhachHang;
         private String tenKhachHang;
         private String cmnd;
@@ -23,9 +23,7 @@ namespace QuanLyTour.BUS
         {
             doan = new DoanBUS();
         }
-        #endregion
 
-        #region Get set
         public string MaKhachHang { get => maKhachHang; set => maKhachHang = value; }
         public string TenKhachHang { get => tenKhachHang; set => tenKhachHang = value; }
         public string Cmnd { get => cmnd; set => cmnd = value; }
@@ -34,9 +32,7 @@ namespace QuanLyTour.BUS
         public string Gioitinh { get => gioitinh; set => gioitinh = value; }
         public string Quoctich { get => quoctich; set => quoctich = value; }
         public DoanBUS Doan { get => doan; set => doan = value; }
-        #endregion
 
-        #region Function
         public static List<KhachHangBUS> getKhachHangByDoan(DoanBUS doan)
         {
             return DAO.KhachHangDAO.getKhachHangByDoan(doan);
@@ -45,21 +41,38 @@ namespace QuanLyTour.BUS
         {
             return DAO.KhachHangDAO.getKhachHangKhongCoDoan(doan);
         }
-        public static void ThemKhachHangDoan(DoanBUS doan, List<KhachHangBUS> dsKhachHang)
+
+
+        public bool XoaKhoiDoan(DoanBUS doan)
         {
-            DAO.KhachHangDAO.ThemKhachHangDoan(doan, dsKhachHang);
-        }
-       
-        public void Xoa(DoanBUS doan)
-        {
-            DAO.KhachHangDAO.Xoa(this, doan);
+            return KhachHangDAO.XoaKhoiDoan(this, doan);
         }
 
-        public void Them(DoanBUS doan)
+        public bool ThemVaoDoan(DoanBUS doan)
         {
-            DAO.KhachHangDAO.Them(this, doan);
+            return KhachHangDAO.ThemVaoDoan(this, doan);
         }
-        #endregion
+
+        public bool KiemTraTonTai()
+        {
+            return KhachHangDAO.KiemTraTonTai(this);
+        }
+        public bool them()
+        {
+
+            return !KiemTraTonTai() && KhachHangDAO.them(this);
+
+        }
+        public bool xoa()
+        {
+            return KhachHangDAO.xoa(this);
+        }
+        public bool sua(KhachHangBUS khachhangmoi)
+        {
+            if (khachhangmoi.KiemTraTonTai() && this.MaKhachHang != khachhangmoi.MaKhachHang)
+                return false;
+            return KhachHangDAO.sua(this, khachhangmoi);
+        }
 
 
 

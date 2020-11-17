@@ -31,17 +31,17 @@ namespace QuanLyTour.BUS
             return obj.ToString() == this.ToString();
         }
 
-        public void Them()
+        public bool Them()
         {
-            GiaDAO.Them(this);
+            return GiaDAO.Them(this);
         }
-        public void Xoa()
+        public bool Xoa()
         {
-            GiaDAO.Xoa(this);
+            return GiaDAO.Xoa(this);
         }
-        public void Sua()
+        public bool Sua()
         {
-            GiaDAO.Sua(this);
+            return GiaDAO.Sua(this);
         }
 
 

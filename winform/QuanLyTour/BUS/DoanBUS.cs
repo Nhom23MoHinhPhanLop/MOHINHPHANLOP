@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuanLyTour.DAO;
 
 namespace QuanLyTour.BUS
 {
     public class DoanBUS
     {
-        #region Properties
         private String maDoan;
         private String tenDoan;
         private DateTime ngayBatDau;
@@ -24,10 +24,6 @@ namespace QuanLyTour.BUS
             dsChiPhi = new List<ChiPhiBUS>();
             tour = new TourBUS();
         }
-        #endregion
-
-        #region Get set
-
 
         public string MaDoan { get => maDoan; set => maDoan = value; }
         public string TenDoan { get => tenDoan; set => tenDoan = value; }
@@ -37,9 +33,7 @@ namespace QuanLyTour.BUS
         public List<KhachHangBUS> DsKhachHang { get => dsKhachHang; set => dsKhachHang = value; }
         public List<NhanVienBUS> DsNhanVien { get => dsNhanVien; set => dsNhanVien = value; }
         public TourBUS Tour { get => tour; set => tour = value; }
-        #endregion
 
-        #region Override
 
         public override bool Equals(object obj)
         {
@@ -51,64 +45,58 @@ namespace QuanLyTour.BUS
             return MaDoan;
         }
 
-        #endregion
-
-
-
-        #region Function
-
         public List<NhanVienBUS> getNhanVienKhongCoDoan()
         {
-            return DAO.NhanVienDAO.getNhanVienKhongCoDoan(this);
+            return NhanVienDAO.getNhanVienKhongCoDoan(this);
         }
-        public void XoaNhanVien(NhanVienBUS nhanvien)
+        public bool XoaNhanVien(NhanVienBUS nhanvien)
         {
-            nhanvien.XoaNhanVienByDoan(this);
+            return nhanvien.XoaKhoiDoan(this);
         }
-        public void ThemNhanVien(NhanVienBUS nhanvien)
+        public bool ThemNhanVien(NhanVienBUS nhanvien)
         {
-            nhanvien.Them(this);
+            return nhanvien.ThemVaoDoan(this);
         }
-        public void XoaKhachHang(KhachHangBUS khachhang)
+        public bool XoaKhachHang(KhachHangBUS khachhang)
         {
-            khachhang.Xoa(this);
+            return khachhang.XoaKhoiDoan(this);
         }
-        public void ThemKhachHang(KhachHangBUS khachhang)
+        public bool ThemKhachHang(KhachHangBUS khachhang)
         {
-            khachhang.Them(this);
+            return khachhang.ThemVaoDoan(this);
         }
-        public void ThemChiPhi(ChiPhiBUS chiphi)
+        public bool ThemChiPhi(ChiPhiBUS chiphi)
         {
 
-            chiphi.Them(this);
+            return chiphi.Them(this);
 
         }
-        public void XoaChiPhi(ChiPhiBUS chiphi)
+        public bool XoaChiPhi(ChiPhiBUS chiphi)
         {
-            chiphi.Xoa();
+            return chiphi.Xoa();
         }
-        public void SuaChiPhi(ChiPhiBUS chiphi)
+        public bool SuaChiPhi(ChiPhiBUS chiphi)
         {
-            chiphi.Sua();
+            return chiphi.Sua();
         }
-
 
         public bool KiemTraTonTai()
         {
-            return DAO.DoanDAO.KiemTraTonTai(this);
+            return DoanDAO.KiemTraTonTai(this);
         }
-        public void Them()
+        public bool Them()
         {
-            DAO.DoanDAO.Them(this);
+            return DoanDAO.Them(this) && this.KiemTraTonTai();
         }
-        public void Xoa()
+        public bool Xoa()
         {
-            DAO.DoanDAO.Xoa(this);
+            return DoanDAO.Xoa(this);
         }
-        public void Sua(DoanBUS doanmoi)
+        public bool Sua(DoanBUS doanmoi)
         {
-            DAO.DoanDAO.Sua(this, doanmoi);
+            if (doanmoi.KiemTraTonTai() && this.MaDoan != doanmoi.MaDoan)
+                return false;
+            return DoanDAO.Sua(this, doanmoi);
         }
-        #endregion
     }
 }

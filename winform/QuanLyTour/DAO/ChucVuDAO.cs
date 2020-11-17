@@ -10,26 +10,28 @@ namespace QuanLyTour.DAO
 {
     public class ChucVuDAO
     {
-        public static ChucVuBUS getChucVuById(ChucVuBUS chucvu)
+        public static List<ChucVuBUS> getAll()
         {
-
-            String query = "select * from ChucVu where maChucVu=@machucvu";
+            List<ChucVuBUS> dsChucVu = new List<ChucVuBUS>();
+            String query = "select * from ChucVu";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
 
                 connection.open();
-                command.Parameters.AddWithValue("@machucvu", chucvu.MaChucVu);
                 var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
+                    ChucVuBUS chucvu = new ChucVuBUS();
                     chucvu.TenChucVu = reader["tenChucVu"].ToString();
+                    chucvu.MaChucVu = reader["maChucVu"].ToString();
+                    dsChucVu.Add(chucvu);
                 }
                 reader.Close();
                 connection.close();
             }
-            return chucvu;
+            return dsChucVu;
         }
     }
 }

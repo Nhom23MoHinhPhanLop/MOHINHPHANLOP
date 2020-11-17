@@ -11,7 +11,7 @@ namespace QuanLyTour.DAO
 {
     public class GiaDAO
     {
-        
+
         public static List<GiaBUS> getGiaByTour(TourBUS tour)
         {
             List<GiaBUS> dsGia = new List<GiaBUS>();
@@ -44,12 +44,12 @@ namespace QuanLyTour.DAO
         public static GiaBUS getGiaHienTai(TourBUS tour)
         {
             GiaBUS gia = new GiaBUS();
-            String query = "select * from gia where ngayBatDau <= getdate() and ngayKetThuc >= getDate() and maTour = @matour";
             Connection connection = new Connection();
-            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
+            using (SqlCommand command = new SqlCommand("proc_getCurrentPrice", connection.getConnection()))
             {
 
                 connection.open();
+                command.CommandType = System.Data.CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@matour", tour.MaTour);
                 var reader = command.ExecuteReader();
 
@@ -68,8 +68,9 @@ namespace QuanLyTour.DAO
             return gia;
         }
 
-        public static void Them(GiaBUS gia)
+        public static bool Them(GiaBUS gia)
         {
+            int result = 0;
             String query = "insert into Gia (tien,ngayBatDau,ngayKetThuc,maTour) values (@sotien,@ngaybd,@ngaykt,@matour)";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
@@ -82,26 +83,31 @@ namespace QuanLyTour.DAO
                 command.Parameters.AddWithValue("@ngaykt", gia.NgayKetThuc);
                 command.Parameters.AddWithValue("@matour", gia.MaTour);
 
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connection.close();
             }
-            using (SqlCommand command = new SqlCommand("select max(id) as myid from Gia", connection.getConnection()))
-            {
+            if (result == 1)
+                using (SqlCommand command = new SqlCommand("select max(id) as myid from Gia", connection.getConnection()))
+                {
 
-                connection.open();
+                    connection.open();
 
-                var reader = command.ExecuteReader();
+                    var reader = command.ExecuteReader();
 
-                reader.Read();
+                    reader.Read();
+                    result = reader.HasRows == true ? 1 : 0;
+                    gia.Id = int.Parse(reader["myid"].ToString());
 
-                gia.Id = int.Parse(reader["myid"].ToString());
+                    connection.close();
+                }
 
-                connection.close();
-            }
+            return result == 1;
+
         }
-        public static void Xoa(GiaBUS gia)
+        public static bool Xoa(GiaBUS gia)
         {
+            int result = 0;
             String query = "delete Gia where id=@id";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
@@ -111,13 +117,15 @@ namespace QuanLyTour.DAO
 
                 command.Parameters.AddWithValue("@id", gia.Id);
 
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connection.close();
             }
+            return result == 1;
         }
-        public static void Sua(GiaBUS gia)
+        public static bool Sua(GiaBUS gia)
         {
+            int result = 0;
             String query = "update Gia set tien=@sotien,ngayBatDau=@ngaybd,ngayKetThuc=@ngaykt where id=@id ";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
@@ -130,10 +138,11 @@ namespace QuanLyTour.DAO
                 command.Parameters.AddWithValue("@ngaybd", gia.NgayBatDau);
                 command.Parameters.AddWithValue("@ngaykt", gia.NgayKetThuc);
 
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
 
                 connection.close();
             }
+            return result == 1;
         }
     }
 }

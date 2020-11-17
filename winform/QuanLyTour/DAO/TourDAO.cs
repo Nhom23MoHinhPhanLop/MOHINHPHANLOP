@@ -1,7 +1,9 @@
-﻿using QuanLyTour.BUS;
+﻿using Newtonsoft.Json.Linq;
+using QuanLyTour.BUS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -52,8 +54,9 @@ namespace QuanLyTour.DAO
                 return count == 1;
             }
         }
-        public static void Them(TourBUS tour)
+        public static bool Them(TourBUS tour)
         {
+            int result = 0;
             String query = "insert into Tour (maTour,tenTour,maLoai) values (@maTour,@tenTour,@maLoai)";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
@@ -63,12 +66,16 @@ namespace QuanLyTour.DAO
                 command.Parameters.AddWithValue("@maTour", tour.MaTour);
                 command.Parameters.AddWithValue("@tenTour", tour.TenTour);
                 command.Parameters.AddWithValue("@maLoai", tour.LoaiTour.MaLoai);
-                command.ExecuteNonQuery();
+
+                result = command.ExecuteNonQuery();
                 connection.close();
             }
+
+            return result == 1;
         }
-        public static void Sua(TourBUS tourcu, TourBUS tourmoi)
+        public static bool Sua(TourBUS tourcu, TourBUS tourmoi)
         {
+            int result = 0;
             String query = "update Tour set maTour=@maTour, tenTour=@tenTour,maLoai=@maLoai where  maTour = @maTourCu ";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
@@ -79,80 +86,72 @@ namespace QuanLyTour.DAO
                 command.Parameters.AddWithValue("@tenTour", tourmoi.TenTour);
                 command.Parameters.AddWithValue("@maLoai", tourmoi.LoaiTour.MaLoai);
                 command.Parameters.AddWithValue("@maTourCu", tourcu.MaTour);
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
                 connection.close();
             }
+            return result == 1;
         }
-        public static void Xoa(TourBUS tour)
+        public static bool Xoa(TourBUS tour)
         {
+            int result = 0;
             String query = "delete from Tour where  maTour = @maTour ";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {
                 connection.open();
                 command.Parameters.AddWithValue("@maTour", tour.MaTour);
-                command.ExecuteNonQuery();
+                result = command.ExecuteNonQuery();
                 connection.close();
             }
+            return result == 1;
         }
-        public static void themDiaDiemTour(TourBUS tour)
+
+        public static DataTable ThongKeDoanhThu(DateTime ngaybd, DateTime ngaykt)
         {
-            String query = "insert into ChiTietTour (maTour,maDiaDiem) values ";
-            foreach (DiaDiemBUS diadiem in tour.DsDiaDiem)
-            {
-                String str = String.Format("('{0}','{1}'),", tour.MaTour, diadiem.MaDiaDiem);
-                query += str;
-            }
-            query = query.Substring(0, query.Length - 1);
+            DataTable result = new DataTable();
             Connection connection = new Connection();
-            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
+            using (SqlCommand command = new SqlCommand("proc_thongkedoanhthutour", connection.getConnection()))
             {
 
                 connection.open();
-                command.ExecuteNonQuery();
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ngaybd", ngaybd);
+                command.Parameters.AddWithValue("@ngaykt", ngaykt);
+
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+
+                adapter.Fill(result);
                 connection.close();
             }
+
+            return result;
+
         }
-        public static void themGiaTour(TourBUS tour)
+        public static Hashtable ThongKeChiPhi(String matour, DateTime ngaybd, DateTime ngaykt)
         {
-            String query = "insert into Gia(tien,ngayBatDau,ngayKetThuc,maTour)values ";
-            foreach (GiaBUS gia in tour.DsGia)
-            {
-                String str = String.Format("({0},'{1}','{2}','{3}'),", gia.Tien, gia.NgayBatDau.ToString("yyyy-MM-dd HH:mm:ss"), gia.NgayKetThuc.ToString("yyyy-MM-dd HH:mm:ss"), tour.MaTour);
-                query += str;
-            }
-            query = query.Substring(0, query.Length - 1);
+            Hashtable result = new Hashtable();
             Connection connection = new Connection();
-            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
+            using (SqlCommand command = new SqlCommand("proc_thongkechiphicuatour", connection.getConnection()))
             {
 
                 connection.open();
-                command.ExecuteNonQuery();
-                connection.close();
-            }
-        }
-        public static TourBUS getTourByDoan(DoanBUS doan)
-        {
-            TourBUS tour = new TourBUS();
-            String query = "select * from Tour,Doan where Tour.maTour=Doan.maTour and maDoan=@madoan";
-            Connection connection = new Connection();
-            using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
-            {
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@ngaybd", ngaybd);
+                command.Parameters.AddWithValue("@ngaykt", ngaykt);
+                command.Parameters.AddWithValue("@matour", matour);
 
-                connection.open();
-                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
                 var reader = command.ExecuteReader();
-
                 while (reader.Read())
                 {
-                    tour.MaTour = reader["maTour"].ToString();
-                    tour.TenTour = reader["tenTour"].ToString();
-
+                    result.Add(reader["tenLoaiChiPhi"].ToString(), int.Parse(reader["sotien"].ToString()));
                 }
+
                 reader.Close();
                 connection.close();
             }
-            return tour;
+
+            return result;
         }
+
     }
 }
