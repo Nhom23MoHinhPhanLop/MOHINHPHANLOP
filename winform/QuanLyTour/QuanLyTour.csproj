@@ -69,12 +69,6 @@
     <Compile Include="DAO\LoaiTourDAO.cs" />
     <Compile Include="DAO\NhanVienDAO.cs" />
     <Compile Include="DAO\TourDAO.cs" />
-    <Compile Include="GUI\Gia.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Gia.Designer.cs">
-      <DependentUpon>Gia.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\KhachHang.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,9 +89,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GUI\Gia.resx">
-      <DependentUpon>Gia.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\KhachHang.resx">
       <DependentUpon>KhachHang.cs</DependentUpon>
     </EmbeddedResource>

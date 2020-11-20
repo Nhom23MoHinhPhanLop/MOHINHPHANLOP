@@ -37,6 +37,38 @@ namespace QuanLyTour.DAO
 
             return tours;
         }
+        public static List<TourBUS> timkiemTour(String keyword)
+        {
+            List<TourBUS> tours = new List<TourBUS>();
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand("proc_timkiemTour", connection.getConnection()))
+            {
+
+                connection.open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@keyword", keyword.ToUpper());
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    TourBUS tour = new TourBUS();
+                    tour.MaTour = reader["maTour"].ToString();
+                    tour.TenTour = reader["tenTour"].ToString();
+                    tour.LoaiTour.MaLoai = reader["maLoai"].ToString();
+                    tour.LoaiTour.TenLoai = reader["tenLoai"].ToString();
+                    tour.DsDiaDiem = DiaDiemDAO.getDiaDiemByTour(tour);
+                    tour.GiaHienTai = GiaDAO.getGiaHienTai(tour);
+                    tour.DsGia = GiaDAO.getGiaByTour(tour);
+
+                    tours.Add(tour);
+                }
+                reader.Close();
+                connection.close();
+            }
+
+            return tours;
+        }
+
         public static bool kiemtraTourTonTai(TourBUS tour)
         {
             String query = "select COUNT(*) as counts from Tour where maTour=@maTour";

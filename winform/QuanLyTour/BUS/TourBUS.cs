@@ -39,6 +39,11 @@ namespace QuanLyTour.BUS
         {
             return TourDAO.kiemtraTourTonTai(this);
         }
+        public void getGiaHienTai()
+        {
+            this.GiaHienTai = GiaDAO.getGiaHienTai(this);
+        }
+
         public bool Them()
         {
             return !isExist() && TourDAO.Them(this);
@@ -70,14 +75,22 @@ namespace QuanLyTour.BUS
         {
             bool result = gia.Them();
             if (result)
+            {
                 this.dsGia.Add(gia);
+                getGiaHienTai();
+            }
             return result;
         }
         public bool XoaGia(GiaBUS gia)
         {
             bool result = gia.Xoa();
             if (result)
+            {
                 this.dsGia.Remove(gia);
+
+                getGiaHienTai();
+
+            }
             return result;
         }
         public bool SuaGia(GiaBUS gia)
@@ -93,6 +106,8 @@ namespace QuanLyTour.BUS
                         break;
                     }
                 }
+                getGiaHienTai();
+
             }
             return result;
         }
@@ -102,12 +117,10 @@ namespace QuanLyTour.BUS
         {
             return this.TenTour;
         }
-
         public override bool Equals(object obj)
         {
             return base.Equals(obj);
         }
-
         public override int GetHashCode()
         {
             return base.GetHashCode();

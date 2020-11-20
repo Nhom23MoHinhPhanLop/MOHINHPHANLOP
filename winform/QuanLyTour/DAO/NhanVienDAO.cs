@@ -105,7 +105,69 @@ namespace QuanLyTour.DAO
             }
             return dsNhanVien;
         }
+        public static List<NhanVienBUS> timkiemNhanVienTrongDoan(DoanBUS doan, String keyword)
+        {
+            List<NhanVienBUS> dsNhanVien = new List<NhanVienBUS>();
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand("proc_timkiemNhanVienTrongDoan", connection.getConnection()))
+            {
 
+                connection.open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
+                command.Parameters.AddWithValue("@keyword", keyword.ToUpper());
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    NhanVienBUS nhanvien = new NhanVienBUS();
+                    nhanvien.MaNhanVien = reader["maNhanVien"].ToString();
+                    nhanvien.TenNhanVien = reader["tenNhanVien"].ToString();
+                    nhanvien.Gioitinh = reader["gioitinh"].ToString();
+                    nhanvien.Cmnd = reader["cmnd"].ToString();
+                    nhanvien.Diachi = reader["diachi"].ToString();
+                    nhanvien.Sdt = reader["sdt"].ToString();
+                    nhanvien.Chucvu.MaChucVu = reader["maChucVu"].ToString();
+                    nhanvien.Chucvu.TenChucVu = reader["tenChucVu"].ToString();
+
+                    dsNhanVien.Add(nhanvien);
+                }
+                reader.Close();
+                connection.close();
+            }
+            return dsNhanVien;
+        }
+        public static List<NhanVienBUS> timkiemNhanVien(String keyword)
+        {
+            List<NhanVienBUS> dsNhanVien = new List<NhanVienBUS>();
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand("proc_timkiemNhanVien", connection.getConnection()))
+            {
+
+                connection.open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@keyword", keyword.ToUpper());
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    NhanVienBUS nhanvien = new NhanVienBUS();
+                    nhanvien.MaNhanVien = reader["maNhanVien"].ToString();
+                    nhanvien.TenNhanVien = reader["tenNhanVien"].ToString();
+                    nhanvien.Gioitinh = reader["gioitinh"].ToString();
+                    nhanvien.Cmnd = reader["cmnd"].ToString();
+                    nhanvien.Diachi = reader["diachi"].ToString();
+                    nhanvien.Sdt = reader["sdt"].ToString();
+                    nhanvien.Chucvu.MaChucVu = reader["maChucVu"].ToString();
+                    nhanvien.Chucvu.TenChucVu = reader["tenChucVu"].ToString();
+
+                    dsNhanVien.Add(nhanvien);
+                }
+                reader.Close();
+                connection.close();
+            }
+            return dsNhanVien;
+        }
 
         public static bool XoaKhoiDoan(NhanVienBUS nhanvien, DoanBUS doan)
         {

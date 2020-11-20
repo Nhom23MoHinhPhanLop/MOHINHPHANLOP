@@ -2,7 +2,6 @@ C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\bin\Debug\QuanL
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\bin\Debug\QuanLyTour.exe
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\bin\Debug\QuanLyTour.pdb
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\bin\Debug\Newtonsoft.Json.dll
-C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.GUI.Gia.resources
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.GUI.KhachHang.resources
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.GUI.Main2.resources
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.GUI.NhanVien.resources
@@ -12,3 +11,4 @@ C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanL
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.csproj.CopyComplete
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.exe
 C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.pdb
+C:\Users\chien\Documents\GitHub\MOHINHPHANLOP\winform\QuanLyTour\obj\Debug\QuanLyTour.csprojAssemblyReference.cache

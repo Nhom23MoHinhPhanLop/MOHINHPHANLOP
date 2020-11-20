@@ -40,7 +40,34 @@ namespace QuanLyTour.DAO
             }
             return list;
         }
+        public static List<DoanBUS> timkiemDoan(String keyword)
+        {
+            List<DoanBUS> list = new List<DoanBUS>();
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand("proc_timkiemDoan", connection.getConnection()))
+            {
 
+                connection.open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@keyword", keyword.ToUpper());
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    DoanBUS doan = new DoanBUS();
+                    doan.MaDoan = reader["maDoan"].ToString();
+                    doan.TenDoan = reader["tenDoan"].ToString();
+                    doan.NgayBatDau = DateTime.Parse(reader["ngayBatDau"].ToString());
+                    doan.NgayKetThuc = DateTime.Parse(reader["ngayKetThuc"].ToString());
+                    doan.Tour.MaTour = reader["maTour"].ToString();
+                    doan.Tour.TenTour = reader["tenTour"].ToString();
+                    list.Add(doan);
+                }
+                reader.Close();
+                connection.close();
+            }
+            return list;
+        }
 
         public static bool KiemTraTonTai(DoanBUS doan)
         {
@@ -124,7 +151,7 @@ namespace QuanLyTour.DAO
         }
 
 
-        public static DataTable ThongKeDoanhThu(String matour,DateTime ngaybd, DateTime ngaykt)
+        public static DataTable ThongKeDoanhThu(String matour, DateTime ngaybd, DateTime ngaykt)
         {
             DataTable result = new DataTable();
             Connection connection = new Connection();

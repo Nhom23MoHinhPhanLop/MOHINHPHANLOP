@@ -68,11 +68,73 @@ namespace QuanLyTour.DAO
             }
             return dsKhachHang;
         }
+        public static List<KhachHangBUS> timkiemKhachHangTrongDoan(DoanBUS doan, String keyword)
+        {
+            List<KhachHangBUS> dsKhachHang = new List<KhachHangBUS>();
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand("proc_timkiemKhachHangTrongDoan", connection.getConnection()))
+            {
+                connection.open();
+
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@madoan", doan.MaDoan);
+                command.Parameters.AddWithValue("@keyword", keyword.ToUpper());
+
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    KhachHangBUS khachhang = new KhachHangBUS();
+                    khachhang.MaKhachHang = reader["maKhachHang"].ToString();
+                    khachhang.TenKhachHang = reader["tenKhachHang"].ToString();
+                    khachhang.Gioitinh = reader["gioitinh"].ToString();
+                    khachhang.Cmnd = reader["cmnd"].ToString();
+                    khachhang.Diachi = reader["diachi"].ToString();
+                    khachhang.Sdt = reader["sdt"].ToString();
+
+                    dsKhachHang.Add(khachhang);
+                }
+                reader.Close();
+                connection.close();
+            }
+            return dsKhachHang;
+        }
+
+        public static List<KhachHangBUS> timkiemKhachHang(String keyword)
+        {
+            List<KhachHangBUS> dsKhachHang = new List<KhachHangBUS>();
+            Connection connection = new Connection();
+            using (SqlCommand command = new SqlCommand("proc_timkiemKhachHang", connection.getConnection()))
+            {
+                connection.open();
+
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@keyword", keyword.ToUpper());
+
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    KhachHangBUS khachhang = new KhachHangBUS();
+                    khachhang.MaKhachHang = reader["maKhachHang"].ToString();
+                    khachhang.TenKhachHang = reader["tenKhachHang"].ToString();
+                    khachhang.Gioitinh = reader["gioitinh"].ToString();
+                    khachhang.Cmnd = reader["cmnd"].ToString();
+                    khachhang.Diachi = reader["diachi"].ToString();
+                    khachhang.Sdt = reader["sdt"].ToString();
+
+                    dsKhachHang.Add(khachhang);
+                }
+                reader.Close();
+                connection.close();
+            }
+            return dsKhachHang;
+        }
         public static List<KhachHangBUS> getAll()
         {
             List<KhachHangBUS> dsKhachHang = new List<KhachHangBUS>();
             String query = "select maKhachHang,tenKhachHang, sdt,gioitinh,diachi,cmnd" +
-                        " from KhachHang";
+                        " from KhachHang ";
             Connection connection = new Connection();
             using (SqlCommand command = new SqlCommand(query, connection.getConnection()))
             {

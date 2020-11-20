@@ -16,7 +16,6 @@ namespace QuanLyTour.BUS
         private String diachi;
         private String sdt;
         private String gioitinh;
-        private String quoctich;
 
         DoanBUS doan;
         public KhachHangBUS()
@@ -30,7 +29,6 @@ namespace QuanLyTour.BUS
         public string Diachi { get => diachi; set => diachi = value; }
         public string Sdt { get => sdt; set => sdt = value; }
         public string Gioitinh { get => gioitinh; set => gioitinh = value; }
-        public string Quoctich { get => quoctich; set => quoctich = value; }
         public DoanBUS Doan { get => doan; set => doan = value; }
 
         public static List<KhachHangBUS> getKhachHangByDoan(DoanBUS doan)

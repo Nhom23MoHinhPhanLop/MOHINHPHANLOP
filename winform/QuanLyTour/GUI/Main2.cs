@@ -31,6 +31,7 @@ namespace QuanLyTour.GUI
             List<LoaiTourBUS> dsLoaiTour;
             List<DiaDiemBUS> dsDiaDiem;
             List<DoanBUS> dsDoan;
+
             //Lấy dữ liệu ban đầu từ csdl
             dsTour = TourDAO.getAll();
             dsLoaiTour = LoaiTourDAO.getAll();
@@ -52,17 +53,13 @@ namespace QuanLyTour.GUI
             //Hiển thị danh sách địa điểm 
             loadDiaDiem(dsDiaDiem);
 
-            //Ẩn up and down giá trị của giá hiện tại
-            txt_Gia.Controls[0].Visible = false;
-
-            //////////////////////////////////////////
             //Lấy dữ liệu đoàn khách
             dsDoan = DAO.DoanDAO.getAll();
             foreach (DoanBUS item in dsDoan)
             {
-                item.DsChiPhi = ChiPhiBUS.getChiPhiByDoan(item);
-                item.DsKhachHang = KhachHangBUS.getKhachHangByDoan(item);
-                item.DsNhanVien = NhanVienBUS.getNhanVienByDoan(item);
+                item.DsChiPhi = ChiPhiDAO.getChiPhiByDoan(item);
+                item.DsKhachHang = KhachHangDAO.getKhachHangByDoan(item);
+                item.DsNhanVien = NhanVienDAO.getNhanVienByDoan(item);
             }
 
             //hiển thị danh sách đoàn khách
@@ -249,10 +246,12 @@ namespace QuanLyTour.GUI
 
                 //Lấy thông tin giá từ giao diện
                 GiaBUS gia = getGia();
-
-                if (tour.ThemGia(gia))
+                if (gia.NgayBatDau > gia.NgayKetThuc)
+                    MessageBox.Show("Ngày bắt đầu không lớn hơn ngày kết thúc", "Thông báo");
+                else if (tour.ThemGia(gia))
                 {
                     loadGia(tour.DsGia);
+                    loadGiaHienTai(tour.GiaHienTai);
                 }
                 else
                 {
@@ -276,6 +275,8 @@ namespace QuanLyTour.GUI
                 if (tour.XoaGia(gia))
                 {
                     loadGia(tour.DsGia);
+                    loadGiaHienTai(tour.GiaHienTai);
+
                 }
                 else
                 {
@@ -295,10 +296,13 @@ namespace QuanLyTour.GUI
 
                 //Lấy thông tin giá từ giao diện
                 GiaBUS gia = getGia();
-
-                if (tour.SuaGia(gia))
+                if (gia.NgayBatDau > gia.NgayKetThuc)
+                    MessageBox.Show("Ngày bắt đầu không lớn hơn ngày kết thúc", "Thông báo");
+                else if (tour.SuaGia(gia))
                 {
                     loadGia(tour.DsGia);
+                    loadGiaHienTai(tour.GiaHienTai);
+
                 }
                 else
                 {
@@ -340,8 +344,11 @@ namespace QuanLyTour.GUI
 
             //Lấy thông tin đoàn từ giao diện
             DoanBUS doan = getDoan();
-
-            if (doan.KiemTraTonTai())
+            if (doan.NgayBatDau > doan.NgayKetThuc)
+            {
+                MessageBox.Show("Ngày bắt đầu không lớn hơn ngày kết thúc", "Thông báo");
+            }
+            else if (doan.KiemTraTonTai())
             {
                 MessageBox.Show("Đoàn đã tồn tại", "Thông báo");
             }
@@ -397,8 +404,11 @@ namespace QuanLyTour.GUI
 
                 //Lấy đoàn đang chọn
                 DoanBUS doancu = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
-
-                if (doanmoi.KiemTraTonTai() && doanmoi.MaDoan != doancu.MaDoan)
+                if (doanmoi.NgayBatDau > doanmoi.NgayKetThuc)
+                {
+                    MessageBox.Show("Ngày bắt đầu không lớn hơn ngày kết thúc", "Thông báo");
+                }
+                else if (doanmoi.KiemTraTonTai() && doanmoi.MaDoan != doancu.MaDoan)
                 {
                     MessageBox.Show("Trùng mã đoàn", "Thông báo");
                 }
@@ -594,8 +604,9 @@ namespace QuanLyTour.GUI
 
                 //Lấy chi phí từ giao diện
                 ChiPhiBUS chiphi = getChiPhi();
-
-                if (doan.ThemChiPhi(chiphi))
+                if (chiphi.Thoigian < doan.NgayBatDau || chiphi.Thoigian > doan.NgayKetThuc)
+                    MessageBox.Show("Ngoài thời gian của đoàn", "Thông báo");
+                else if (doan.ThemChiPhi(chiphi))
                 {
                     //Thêm vào đoàn đang chọn và hiển thị lại giao diện
                     doan.DsChiPhi.Add(chiphi);
@@ -657,8 +668,9 @@ namespace QuanLyTour.GUI
                 chiphicu.Thoigian = chiphimoi.Thoigian;
                 chiphicu.Tien = chiphimoi.Tien;
 
-
-                if (chiphicu.Sua())
+                if (chiphimoi.Thoigian < doan.NgayBatDau || chiphimoi.Thoigian > doan.NgayKetThuc)
+                    MessageBox.Show("Ngoài thời gian của đoàn", "Thông báo");
+                else if (chiphicu.Sua())
                     //Hiển thị lại giao diện
                     loadChiPhi(doan.DsChiPhi);
                 else
@@ -698,8 +710,15 @@ namespace QuanLyTour.GUI
 
             if (!String.IsNullOrEmpty(nhanvien.MaNhanVien.Trim()))
             {
-                dsNhanVien.Add(nhanvien);
-                loadNhanVien(dsNhanVien);
+                if (nhanvien.them())
+                {
+                    dsNhanVien.Add(nhanvien);
+                    loadNhanVien(dsNhanVien);
+                }
+                else
+                {
+                    MessageBox.Show("Thêm nhân viên thất bại");
+                }
             }
             else
             {
@@ -713,7 +732,7 @@ namespace QuanLyTour.GUI
                 List<NhanVienBUS> dsNhanVien = (List<NhanVienBUS>)grid_qlNhanVien.DataSource;
 
 
-                NhanVienBUS nhanvien = getNhanVien();
+                NhanVienBUS nhanvien = (NhanVienBUS)grid_qlNhanVien.CurrentRow.DataBoundItem;
 
                 if (nhanvien.xoa())
                 {
@@ -785,20 +804,86 @@ namespace QuanLyTour.GUI
 
             }
         }
-
         private void btn_themmoiKhachHang_Click(object sender, EventArgs e)
         {
+            List<KhachHangBUS> dsKhachHang = (List<KhachHangBUS>)grid_qlKhachHang.DataSource;
 
+
+            KhachHangBUS khachhang = getKhachHang();
+
+            if (!String.IsNullOrEmpty(khachhang.MaKhachHang.Trim()))
+            {
+                if (khachhang.them())
+                {
+                    dsKhachHang.Add(khachhang);
+                    loadKhachHang(dsKhachHang);
+                }
+                else
+                {
+                    MessageBox.Show("Thêm khách hàng thất bại");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Thêm Khach hang thất bại");
+            }
         }
-
         private void btn_xoaboKhachHang_Click(object sender, EventArgs e)
         {
+            if (grid_qlKhachHang.SelectedRows.Count > 0)
+            {
+                List<KhachHangBUS> dsKhachHang = (List<KhachHangBUS>)grid_qlKhachHang.DataSource;
 
+                KhachHangBUS khachang = (KhachHangBUS)grid_qlKhachHang.CurrentRow.DataBoundItem;
+
+                if (khachang.xoa())
+                {
+                    dsKhachHang.Remove(khachang);
+                    loadKhachHang(dsKhachHang);
+                }
+                else
+                {
+                    MessageBox.Show("Xóa khách hàng thất bại");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Chọn Khách hàng để xóa");
+            }
         }
-
         private void btn_suaKhachHang_Click(object sender, EventArgs e)
         {
+            if (grid_qlKhachHang.SelectedRows.Count > 0)
+            {
+                List<KhachHangBUS> dsKhachHang = (List<KhachHangBUS>)grid_qlKhachHang.DataSource;
 
+
+                KhachHangBUS khachhangmoi = getKhachHang();
+
+
+                KhachHangBUS khachhangcu = (KhachHangBUS)grid_qlKhachHang.CurrentRow.DataBoundItem;
+
+                if (khachhangcu.sua(khachhangmoi))
+                {
+                    //Đặt tất cả thông tin của đoàn cũ thành đoàn mới
+                    khachhangcu.MaKhachHang = khachhangmoi.MaKhachHang;
+                    khachhangcu.TenKhachHang = khachhangmoi.TenKhachHang;
+                    khachhangcu.Sdt = khachhangmoi.Sdt;
+                    khachhangcu.Gioitinh = khachhangmoi.Gioitinh;
+                    khachhangcu.Diachi = khachhangmoi.Diachi;
+                    khachhangcu.Cmnd = khachhangmoi.Cmnd;
+                    loadKhachHang(dsKhachHang);
+
+                }
+                else
+                {
+                    MessageBox.Show("Sửa nhân viên thất bại", "Thông báo");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Chọn 1 nhân viên để sửa", "Thông báo");
+            }
         }
         private void btn_thongkeTour_Click(object sender, EventArgs e)
         {
@@ -855,20 +940,75 @@ namespace QuanLyTour.GUI
             }
 
         }
+        private void btn_timkiemDoan_Click(object sender, EventArgs e)
+        {
+            List<DoanBUS> dsDoan = DoanDAO.timkiemDoan(txt_timkiemDoan.Text);
+            foreach (DoanBUS doan in dsDoan)
+            {
+                doan.DsChiPhi = ChiPhiBUS.getChiPhiByDoan(doan);
+                doan.DsKhachHang = KhachHangBUS.getKhachHangByDoan(doan);
+                doan.DsNhanVien = NhanVienBUS.getNhanVienByDoan(doan);
+            }
+            loadDoan(dsDoan);
+        }
+        private void btn_timkiemKhachHangTrongDoan_Click(object sender, EventArgs e)
+        {
+            if (grid_dsDoan.SelectedRows.Count > 0)
+            {
+                DoanBUS doan = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
+                String keyword = txt_timkiemKhachHangTrongDoan.Text;
+                loadKhachHangByDoan(KhachHangDAO.timkiemKhachHangTrongDoan(doan, keyword));
+            }
+            else
+            {
+                MessageBox.Show("Chọn đoàn để tìm kiếm", "Thông báo");
+            }
 
+        }
+        private void btn_timkiemNhanVienTrongDoan_Click(object sender, EventArgs e)
+        {
+            if (grid_dsDoan.SelectedRows.Count > 0)
+            {
+                DoanBUS doan = (DoanBUS)grid_dsDoan.CurrentRow.DataBoundItem;
+                String keyword = txt_timkiemNhanVienTrongDoan.Text;
+                loadNhanVienByDoan(NhanVienDAO.timkiemNhanVienTrongDoan(doan, keyword));
+            }
+            else
+            {
+                MessageBox.Show("Chọn đoàn để tìm kiếm", "Thông báo");
+            }
+        }
+        private void btn_timkiemKhachHang_Click(object sender, EventArgs e)
+        {
+            loadKhachHang(KhachHangDAO.timkiemKhachHang(txt_timkiemKhachHang.Text));
+        }
+
+        private void btn_timkiemNhanVien_Click(object sender, EventArgs e)
+        {
+            loadNhanVien(NhanVienDAO.timkiemNhanVien(txt_timkiemNhanVien.Text));
+
+        }
+        private void btn_timkiemTour_Click(object sender, EventArgs e)
+        {
+            loadTour(TourDAO.timkiemTour(txt_timkiemTour.Text));
+        }
         #endregion
 
-        #region MeThod
+        #region Hiển thị giao diện
+
         void loadTour(List<TourBUS> dsTour)
         {
             grid_dsTour.DataSource = null;
             grid_dsTour.DataSource = dsTour;
-            grid_dsTour.Columns["loaiTour"].Visible = false;
             grid_dsTour.Columns["giaHienTai"].Visible = false;
             grid_dsTour.Columns["doanhthu"].Visible = false;
+            grid_dsTour.Columns["maTour"].HeaderText = "Mã tour";
+            grid_dsTour.Columns["tenTour"].HeaderText = "Tên tour";
+            grid_dsTour.Columns["loaiTour"].HeaderText = "Loại tour";
 
-            grid_dsTour.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            grid_dsTour.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid_dsTour.Columns["maTour"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            grid_dsTour.Columns["tenTour"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid_dsTour.Columns["loaiTour"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             grid_dsTour.ClearSelection();
 
 
@@ -913,8 +1053,15 @@ namespace QuanLyTour.GUI
             {
                 grid_dsGia.DataSource = dsGia;
                 grid_dsGia.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                grid_dsGia.Columns["maTour"].Visible = false;
                 grid_dsGia.Columns["id"].Visible = false;
+                grid_dsGia.Columns["maTour"].Visible = false;
+                grid_dsGia.Columns["ngayBatDau"].HeaderText = "Ngày bắt đầu";
+                grid_dsGia.Columns["ngayKetThuc"].HeaderText = "Ngày kết thúc";
+                grid_dsGia.Columns["tien"].HeaderText = "Số tiền";
+
+                grid_dsGia.Columns["tien"].DefaultCellStyle.Format = "N0";
+                grid_dsGia.Columns["ngayBatDau"].DefaultCellStyle.Format = "dd/MM/yyyy";
+                grid_dsGia.Columns["ngayKetThuc"].DefaultCellStyle.Format = "dd/MM/yyyy";
                 grid_dsGia.ClearSelection();
             }
         }
@@ -932,7 +1079,14 @@ namespace QuanLyTour.GUI
             grid_dsDoan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             grid_dsDoan.Columns["tenDoan"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             grid_dsDoan.Columns["tour"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid_dsDoan.Columns["ngayBatDau"].DefaultCellStyle.Format = "dd /MM/yyyy";
+            grid_dsDoan.Columns["ngayKetThuc"].DefaultCellStyle.Format = "dd/MM/yyyy";
 
+            grid_dsDoan.Columns["maDoan"].HeaderText = "Mã đoàn";
+            grid_dsDoan.Columns["tenDoan"].HeaderText = "Tên đoàn";
+            grid_dsDoan.Columns["tour"].HeaderText = "Tên tour";
+            grid_dsDoan.Columns["ngayBatDau"].HeaderText = "Ngày bắt đầu";
+            grid_dsDoan.Columns["ngayKetThuc"].HeaderText = "Ngày kết thúc";
             grid_dsDoan.ClearSelection();
 
             loadChiPhi(null);
@@ -947,10 +1101,20 @@ namespace QuanLyTour.GUI
             {
                 grid_dsChiPhi.DataSource = dsChiPhi;
                 grid_dsChiPhi.Columns["maChiphi"].Visible = false;
+                grid_dsChiPhi.Columns["tien"].DefaultCellStyle.Format = "N0";
                 grid_dsChiPhi.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                grid_dsChiPhi.ClearSelection();
-            }
 
+                grid_dsChiPhi.Columns["tien"].HeaderText = "Tiền";
+                grid_dsChiPhi.Columns["loaichiphi"].HeaderText = "Loại chi phí";
+                grid_dsChiPhi.Columns["thoigian"].HeaderText = "Thời gian";
+
+
+                grid_dsChiPhi.ClearSelection();
+
+            }
+            //Xóa dữ liệu chi phí
+            txt_sotien.Value = 0;
+            datetime_thoigian.Value = DateTime.Now;
         }
         void loadLoaiChiPhi(List<LoaiChiPhiBUS> dsLoaiChiPhi)
         {
@@ -962,8 +1126,16 @@ namespace QuanLyTour.GUI
         {
             grid_qlNhanVien.DataSource = null;
             grid_qlNhanVien.DataSource = dsNhanVien;
-            grid_qlNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            grid_qlNhanVien.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid_qlNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            grid_qlNhanVien.Columns["manhanvien"].HeaderText = "Mã nhân viên";
+            grid_qlNhanVien.Columns["tennhanvien"].HeaderText = "Họ tên";
+            grid_qlNhanVien.Columns["sdt"].HeaderText = "Số điện thoại";
+            grid_qlNhanVien.Columns["gioitinh"].HeaderText = "Giới tính";
+            grid_qlNhanVien.Columns["cmnd"].HeaderText = "CMND";
+            grid_qlNhanVien.Columns["diachi"].HeaderText = "Địa chỉ";
+            grid_qlNhanVien.Columns["chucvu"].HeaderText = "Chức vụ";
+
             grid_qlNhanVien.ClearSelection();
 
         }
@@ -971,8 +1143,16 @@ namespace QuanLyTour.GUI
         {
             grid_qlKhachHang.DataSource = null;
             grid_qlKhachHang.DataSource = dsKhachHang;
-            grid_qlKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            grid_qlKhachHang.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            grid_qlKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            grid_qlKhachHang.Columns["doan"].Visible = false;
+
+            grid_qlKhachHang.Columns["makhachhang"].HeaderText = "Mã khách hàng";
+            grid_qlKhachHang.Columns["tenkhachhang"].HeaderText = "Họ tên";
+            grid_qlKhachHang.Columns["sdt"].HeaderText = "Số điện thoại";
+            grid_qlKhachHang.Columns["gioitinh"].HeaderText = "Giới tính";
+            grid_qlKhachHang.Columns["cmnd"].HeaderText = "CMND";
+            grid_qlKhachHang.Columns["diachi"].HeaderText = "Địa chỉ";
+
             grid_qlKhachHang.ClearSelection();
 
         }
@@ -985,7 +1165,13 @@ namespace QuanLyTour.GUI
                 grid_dsKhachHang.Columns["doan"].Visible = false;
                 grid_dsKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
-                grid_dsKhachHang.Columns["tenkhachhang"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                grid_dsKhachHang.Columns["makhachhang"].HeaderText = "Mã khách hàng";
+                grid_dsKhachHang.Columns["tenkhachhang"].HeaderText = "Họ tên";
+                grid_dsKhachHang.Columns["sdt"].HeaderText = "Số điện thoại";
+                grid_dsKhachHang.Columns["gioitinh"].HeaderText = "Giới tính";
+                grid_dsKhachHang.Columns["cmnd"].HeaderText = "CMND";
+                grid_dsKhachHang.Columns["diachi"].HeaderText = "Địa chỉ";
+
                 grid_dsKhachHang.ClearSelection();
             }
 
@@ -997,7 +1183,15 @@ namespace QuanLyTour.GUI
             {
                 grid_dsNhanVien.DataSource = dsNhanVien;
                 grid_dsNhanVien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                grid_dsNhanVien.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
+                grid_dsNhanVien.Columns["manhanvien"].HeaderText = "Mã nhân viên";
+                grid_dsNhanVien.Columns["tennhanvien"].HeaderText = "Họ tên";
+                grid_dsNhanVien.Columns["sdt"].HeaderText = "Số điện thoại";
+                grid_dsNhanVien.Columns["gioitinh"].HeaderText = "Giới tính";
+                grid_dsNhanVien.Columns["cmnd"].HeaderText = "CMND";
+                grid_dsNhanVien.Columns["diachi"].HeaderText = "Địa chỉ";
+                grid_dsNhanVien.Columns["chucvu"].HeaderText = "Chức vụ";
+
                 grid_dsNhanVien.ClearSelection();
             }
         }
@@ -1123,9 +1317,25 @@ namespace QuanLyTour.GUI
 
             return nhanvien;
         }
-        #endregion
+        KhachHangBUS getKhachHang()
+        {
+            KhachHangBUS khachhang = new KhachHangBUS();
 
-        #region E
+            khachhang.MaKhachHang = txt_maKhachHang.Text;
+            khachhang.TenKhachHang = txt_tenKhachHang.Text;
+            khachhang.Diachi = txt_diachiKhachHang.Text;
+            khachhang.Sdt = txt_sdtKhachHang.Text;
+            khachhang.Cmnd = txt_cmndKhachHang.Text;
+            if (rd_namKhachHang.Checked)
+                khachhang.Gioitinh = "Nam";
+            else
+                khachhang.Gioitinh = "Nữ";
+
+
+            return khachhang;
+        }
+
+        #endregion
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1138,12 +1348,6 @@ namespace QuanLyTour.GUI
             DataGridView gridView = sender as DataGridView;
             gridView.ClearSelection();
         }
-
-
-
-
-
-        #endregion
 
 
     }

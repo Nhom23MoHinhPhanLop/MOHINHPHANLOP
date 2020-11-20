@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.panel2 = new System.Windows.Forms.Panel();
             this.txt_tenTour = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,19 +40,19 @@
             this.grid_dsTour = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.grid_dsDoan = new System.Windows.Forms.DataGridView();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btn_timkiemDoan = new System.Windows.Forms.Button();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.btn_XoaKhachHang = new System.Windows.Forms.Button();
             this.btn_ThemKhachHang = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.btn_timkiemKhachHangTrongDoan = new System.Windows.Forms.Button();
+            this.txt_timkiemKhachHangTrongDoan = new System.Windows.Forms.TextBox();
             this.grid_dsKhachHang = new System.Windows.Forms.DataGridView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.btn_XoaNhanVien = new System.Windows.Forms.Button();
             this.btn_ThemNhanVien = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.btn_timkiemNhanVienTrongDoan = new System.Windows.Forms.Button();
+            this.txt_timkiemNhanVienTrongDoan = new System.Windows.Forms.TextBox();
             this.grid_dsNhanVien = new System.Windows.Forms.DataGridView();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.btn_SuaChiPhi = new System.Windows.Forms.Button();
@@ -68,7 +68,7 @@
             this.panel11 = new System.Windows.Forms.Panel();
             this.comboBox_loaiChiPhi = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txt_timkiemDoan = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btn_SuaDoan = new System.Windows.Forms.Button();
             this.btn_XoaDoan = new System.Windows.Forms.Button();
@@ -194,6 +194,7 @@
             this.datetime_bdThongkedoan = new System.Windows.Forms.DateTimePicker();
             this.label35 = new System.Windows.Forms.Label();
             this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.grid_thongkesolanditour = new System.Windows.Forms.DataGridView();
             this.btn_thongkeSoLanDiTour = new System.Windows.Forms.Button();
             this.panel34 = new System.Windows.Forms.Panel();
             this.datetime_ktThongkesolandi = new System.Windows.Forms.DateTimePicker();
@@ -201,7 +202,12 @@
             this.panel35 = new System.Windows.Forms.Panel();
             this.datetime_bdThongkesolandi = new System.Windows.Forms.DateTimePicker();
             this.label39 = new System.Windows.Forms.Label();
-            this.grid_thongkesolanditour = new System.Windows.Forms.DataGridView();
+            this.btn_timkiemNhanVien = new System.Windows.Forms.Button();
+            this.txt_timkiemNhanVien = new System.Windows.Forms.TextBox();
+            this.btn_timkiemKhachHang = new System.Windows.Forms.Button();
+            this.txt_timkiemKhachHang = new System.Windows.Forms.TextBox();
+            this.btn_timkiemTour = new System.Windows.Forms.Button();
+            this.txt_timkiemTour = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_dsTour)).BeginInit();
@@ -267,9 +273,9 @@
             this.panel30.SuspendLayout();
             this.panel31.SuspendLayout();
             this.tabPage13.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grid_thongkesolanditour)).BeginInit();
             this.panel34.SuspendLayout();
             this.panel35.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grid_thongkesolanditour)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -333,22 +339,22 @@
             this.grid_dsTour.AllowUserToResizeColumns = false;
             this.grid_dsTour.AllowUserToResizeRows = false;
             this.grid_dsTour.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid_dsTour.Location = new System.Drawing.Point(0, 0);
+            this.grid_dsTour.Location = new System.Drawing.Point(0, 34);
             this.grid_dsTour.MultiSelect = false;
             this.grid_dsTour.Name = "grid_dsTour";
             this.grid_dsTour.ReadOnly = true;
             this.grid_dsTour.RowHeadersVisible = false;
             this.grid_dsTour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid_dsTour.Size = new System.Drawing.Size(688, 658);
+            this.grid_dsTour.Size = new System.Drawing.Size(688, 624);
             this.grid_dsTour.TabIndex = 0;
             this.grid_dsTour.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_dsTour_CellClick);
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.grid_dsDoan);
-            this.tabPage2.Controls.Add(this.button8);
+            this.tabPage2.Controls.Add(this.btn_timkiemDoan);
             this.tabPage2.Controls.Add(this.tabControl2);
-            this.tabPage2.Controls.Add(this.textBox5);
+            this.tabPage2.Controls.Add(this.txt_timkiemDoan);
             this.tabPage2.Controls.Add(this.groupBox4);
             this.tabPage2.Location = new System.Drawing.Point(4, 23);
             this.tabPage2.Name = "tabPage2";
@@ -376,14 +382,15 @@
             this.grid_dsDoan.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_dsDoan_CellClick);
             this.grid_dsDoan.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.grid_dsChiPhi_DataBindingComplete);
             // 
-            // button8
+            // btn_timkiemDoan
             // 
-            this.button8.Location = new System.Drawing.Point(487, 175);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(119, 25);
-            this.button8.TabIndex = 5;
-            this.button8.Text = "Tìm kiếm";
-            this.button8.UseVisualStyleBackColor = true;
+            this.btn_timkiemDoan.Location = new System.Drawing.Point(487, 175);
+            this.btn_timkiemDoan.Name = "btn_timkiemDoan";
+            this.btn_timkiemDoan.Size = new System.Drawing.Size(119, 25);
+            this.btn_timkiemDoan.TabIndex = 5;
+            this.btn_timkiemDoan.Text = "Tìm kiếm";
+            this.btn_timkiemDoan.UseVisualStyleBackColor = true;
+            this.btn_timkiemDoan.Click += new System.EventHandler(this.btn_timkiemDoan_Click);
             // 
             // tabControl2
             // 
@@ -400,8 +407,8 @@
             // 
             this.tabPage3.Controls.Add(this.btn_XoaKhachHang);
             this.tabPage3.Controls.Add(this.btn_ThemKhachHang);
-            this.tabPage3.Controls.Add(this.button6);
-            this.tabPage3.Controls.Add(this.textBox3);
+            this.tabPage3.Controls.Add(this.btn_timkiemKhachHangTrongDoan);
+            this.tabPage3.Controls.Add(this.txt_timkiemKhachHangTrongDoan);
             this.tabPage3.Controls.Add(this.grid_dsKhachHang);
             this.tabPage3.Location = new System.Drawing.Point(4, 23);
             this.tabPage3.Name = "tabPage3";
@@ -431,22 +438,23 @@
             this.btn_ThemKhachHang.UseVisualStyleBackColor = true;
             this.btn_ThemKhachHang.Click += new System.EventHandler(this.btn_ThemKhachHang_Click);
             // 
-            // button6
+            // btn_timkiemKhachHangTrongDoan
             // 
-            this.button6.Location = new System.Drawing.Point(411, 38);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(116, 25);
-            this.button6.TabIndex = 2;
-            this.button6.Text = "Tìm kiếm";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btn_timkiemKhachHangTrongDoan.Location = new System.Drawing.Point(411, 38);
+            this.btn_timkiemKhachHangTrongDoan.Name = "btn_timkiemKhachHangTrongDoan";
+            this.btn_timkiemKhachHangTrongDoan.Size = new System.Drawing.Size(116, 25);
+            this.btn_timkiemKhachHangTrongDoan.TabIndex = 2;
+            this.btn_timkiemKhachHangTrongDoan.Text = "Tìm kiếm";
+            this.btn_timkiemKhachHangTrongDoan.UseVisualStyleBackColor = true;
+            this.btn_timkiemKhachHangTrongDoan.Click += new System.EventHandler(this.btn_timkiemKhachHangTrongDoan_Click);
             // 
-            // textBox3
+            // txt_timkiemKhachHangTrongDoan
             // 
-            this.textBox3.Location = new System.Drawing.Point(11, 39);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(394, 24);
-            this.textBox3.TabIndex = 1;
+            this.txt_timkiemKhachHangTrongDoan.Location = new System.Drawing.Point(11, 39);
+            this.txt_timkiemKhachHangTrongDoan.Multiline = true;
+            this.txt_timkiemKhachHangTrongDoan.Name = "txt_timkiemKhachHangTrongDoan";
+            this.txt_timkiemKhachHangTrongDoan.Size = new System.Drawing.Size(394, 24);
+            this.txt_timkiemKhachHangTrongDoan.TabIndex = 1;
             // 
             // grid_dsKhachHang
             // 
@@ -468,8 +476,8 @@
             // 
             this.tabPage4.Controls.Add(this.btn_XoaNhanVien);
             this.tabPage4.Controls.Add(this.btn_ThemNhanVien);
-            this.tabPage4.Controls.Add(this.button10);
-            this.tabPage4.Controls.Add(this.textBox4);
+            this.tabPage4.Controls.Add(this.btn_timkiemNhanVienTrongDoan);
+            this.tabPage4.Controls.Add(this.txt_timkiemNhanVienTrongDoan);
             this.tabPage4.Controls.Add(this.grid_dsNhanVien);
             this.tabPage4.Location = new System.Drawing.Point(4, 23);
             this.tabPage4.Name = "tabPage4";
@@ -499,22 +507,23 @@
             this.btn_ThemNhanVien.UseVisualStyleBackColor = true;
             this.btn_ThemNhanVien.Click += new System.EventHandler(this.btn_ThemNhanVien_Click);
             // 
-            // button10
+            // btn_timkiemNhanVienTrongDoan
             // 
-            this.button10.Location = new System.Drawing.Point(411, 38);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(116, 25);
-            this.button10.TabIndex = 7;
-            this.button10.Text = "Tìm kiếm";
-            this.button10.UseVisualStyleBackColor = true;
+            this.btn_timkiemNhanVienTrongDoan.Location = new System.Drawing.Point(411, 38);
+            this.btn_timkiemNhanVienTrongDoan.Name = "btn_timkiemNhanVienTrongDoan";
+            this.btn_timkiemNhanVienTrongDoan.Size = new System.Drawing.Size(116, 25);
+            this.btn_timkiemNhanVienTrongDoan.TabIndex = 7;
+            this.btn_timkiemNhanVienTrongDoan.Text = "Tìm kiếm";
+            this.btn_timkiemNhanVienTrongDoan.UseVisualStyleBackColor = true;
+            this.btn_timkiemNhanVienTrongDoan.Click += new System.EventHandler(this.btn_timkiemNhanVienTrongDoan_Click);
             // 
-            // textBox4
+            // txt_timkiemNhanVienTrongDoan
             // 
-            this.textBox4.Location = new System.Drawing.Point(11, 39);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(394, 24);
-            this.textBox4.TabIndex = 6;
+            this.txt_timkiemNhanVienTrongDoan.Location = new System.Drawing.Point(11, 39);
+            this.txt_timkiemNhanVienTrongDoan.Multiline = true;
+            this.txt_timkiemNhanVienTrongDoan.Name = "txt_timkiemNhanVienTrongDoan";
+            this.txt_timkiemNhanVienTrongDoan.Size = new System.Drawing.Size(394, 24);
+            this.txt_timkiemNhanVienTrongDoan.TabIndex = 6;
             // 
             // grid_dsNhanVien
             // 
@@ -685,13 +694,13 @@
             this.label11.TabIndex = 0;
             this.label11.Text = "Loại chi phí";
             // 
-            // textBox5
+            // txt_timkiemDoan
             // 
-            this.textBox5.Location = new System.Drawing.Point(3, 175);
-            this.textBox5.Multiline = true;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(478, 24);
-            this.textBox5.TabIndex = 4;
+            this.txt_timkiemDoan.Location = new System.Drawing.Point(3, 175);
+            this.txt_timkiemDoan.Multiline = true;
+            this.txt_timkiemDoan.Name = "txt_timkiemDoan";
+            this.txt_timkiemDoan.Size = new System.Drawing.Size(478, 24);
+            this.txt_timkiemDoan.TabIndex = 4;
             // 
             // groupBox4
             // 
@@ -900,6 +909,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.btn_timkiemTour);
+            this.tabPage1.Controls.Add(this.txt_timkiemTour);
             this.tabPage1.Controls.Add(this.tabControl3);
             this.tabPage1.Controls.Add(this.btn_xoaTour);
             this.tabPage1.Controls.Add(this.btn_suaTour);
@@ -949,7 +960,7 @@
             this.groupBox2.Size = new System.Drawing.Size(436, 136);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Giá";
+            this.groupBox2.Text = "Giá hiện tại";
             // 
             // btn_xoaGia
             // 
@@ -1039,9 +1050,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(3, 11);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(60, 14);
+            this.label8.Size = new System.Drawing.Size(40, 14);
             this.label8.TabIndex = 0;
-            this.label8.Text = "Giá hiện tại";
+            this.label8.Text = "Số tiền";
             // 
             // panel15
             // 
@@ -1222,6 +1233,8 @@
             // 
             // tabPage9
             // 
+            this.tabPage9.Controls.Add(this.btn_timkiemNhanVien);
+            this.tabPage9.Controls.Add(this.txt_timkiemNhanVien);
             this.tabPage9.Controls.Add(this.panel20);
             this.tabPage9.Controls.Add(this.btn_suaNhanVien);
             this.tabPage9.Controls.Add(this.btn_xoaboNhanVien);
@@ -1406,9 +1419,9 @@
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(3, 9);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(75, 14);
+            this.label18.Size = new System.Drawing.Size(38, 14);
             this.label18.TabIndex = 0;
-            this.label18.Text = "Tên nhân viên";
+            this.label18.Text = "Họ tên";
             // 
             // panel10
             // 
@@ -1462,18 +1475,20 @@
             this.grid_qlNhanVien.AllowUserToResizeColumns = false;
             this.grid_qlNhanVien.AllowUserToResizeRows = false;
             this.grid_qlNhanVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid_qlNhanVien.Location = new System.Drawing.Point(3, 3);
+            this.grid_qlNhanVien.Location = new System.Drawing.Point(3, 34);
             this.grid_qlNhanVien.MultiSelect = false;
             this.grid_qlNhanVien.Name = "grid_qlNhanVien";
             this.grid_qlNhanVien.ReadOnly = true;
             this.grid_qlNhanVien.RowHeadersVisible = false;
             this.grid_qlNhanVien.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid_qlNhanVien.Size = new System.Drawing.Size(688, 653);
+            this.grid_qlNhanVien.Size = new System.Drawing.Size(688, 622);
             this.grid_qlNhanVien.TabIndex = 0;
             this.grid_qlNhanVien.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_qlNhanVien_CellClick);
             // 
             // tabPage10
             // 
+            this.tabPage10.Controls.Add(this.btn_timkiemKhachHang);
+            this.tabPage10.Controls.Add(this.txt_timkiemKhachHang);
             this.tabPage10.Controls.Add(this.panel27);
             this.tabPage10.Controls.Add(this.panel21);
             this.tabPage10.Controls.Add(this.btn_suaKhachHang);
@@ -1695,12 +1710,13 @@
             this.grid_qlKhachHang.AllowUserToResizeColumns = false;
             this.grid_qlKhachHang.AllowUserToResizeRows = false;
             this.grid_qlKhachHang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid_qlKhachHang.Location = new System.Drawing.Point(5, 3);
+            this.grid_qlKhachHang.Location = new System.Drawing.Point(5, 34);
+            this.grid_qlKhachHang.MultiSelect = false;
             this.grid_qlKhachHang.Name = "grid_qlKhachHang";
             this.grid_qlKhachHang.ReadOnly = true;
             this.grid_qlKhachHang.RowHeadersVisible = false;
             this.grid_qlKhachHang.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid_qlKhachHang.Size = new System.Drawing.Size(688, 653);
+            this.grid_qlKhachHang.Size = new System.Drawing.Size(688, 622);
             this.grid_qlKhachHang.TabIndex = 8;
             this.grid_qlKhachHang.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_qlKhachHang_CellClick);
             // 
@@ -1742,18 +1758,18 @@
             // 
             // chart_thongkechiphi
             // 
-            chartArea6.Name = "ChartArea1";
-            this.chart_thongkechiphi.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart_thongkechiphi.Legends.Add(legend6);
+            chartArea2.Name = "ChartArea1";
+            this.chart_thongkechiphi.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart_thongkechiphi.Legends.Add(legend2);
             this.chart_thongkechiphi.Location = new System.Drawing.Point(780, 51);
             this.chart_thongkechiphi.Name = "chart_thongkechiphi";
-            series6.ChartArea = "ChartArea1";
-            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series6.IsValueShownAsLabel = true;
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart_thongkechiphi.Series.Add(series6);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series2.IsValueShownAsLabel = true;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart_thongkechiphi.Series.Add(series2);
             this.chart_thongkechiphi.Size = new System.Drawing.Size(353, 563);
             this.chart_thongkechiphi.TabIndex = 12;
             this.chart_thongkechiphi.Text = "chart1";
@@ -1973,6 +1989,22 @@
             this.tabPage13.Text = "Số lần đi tour của nhân viên";
             this.tabPage13.UseVisualStyleBackColor = true;
             // 
+            // grid_thongkesolanditour
+            // 
+            this.grid_thongkesolanditour.AllowUserToAddRows = false;
+            this.grid_thongkesolanditour.AllowUserToDeleteRows = false;
+            this.grid_thongkesolanditour.AllowUserToResizeColumns = false;
+            this.grid_thongkesolanditour.AllowUserToResizeRows = false;
+            this.grid_thongkesolanditour.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid_thongkesolanditour.Location = new System.Drawing.Point(6, 51);
+            this.grid_thongkesolanditour.MultiSelect = false;
+            this.grid_thongkesolanditour.Name = "grid_thongkesolanditour";
+            this.grid_thongkesolanditour.ReadOnly = true;
+            this.grid_thongkesolanditour.RowHeadersVisible = false;
+            this.grid_thongkesolanditour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grid_thongkesolanditour.Size = new System.Drawing.Size(1127, 563);
+            this.grid_thongkesolanditour.TabIndex = 12;
+            // 
             // btn_thongkeSoLanDiTour
             // 
             this.btn_thongkeSoLanDiTour.Location = new System.Drawing.Point(494, 6);
@@ -2038,21 +2070,59 @@
             this.label39.TabIndex = 0;
             this.label39.Text = "Từ";
             // 
-            // grid_thongkesolanditour
+            // btn_timkiemNhanVien
             // 
-            this.grid_thongkesolanditour.AllowUserToAddRows = false;
-            this.grid_thongkesolanditour.AllowUserToDeleteRows = false;
-            this.grid_thongkesolanditour.AllowUserToResizeColumns = false;
-            this.grid_thongkesolanditour.AllowUserToResizeRows = false;
-            this.grid_thongkesolanditour.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grid_thongkesolanditour.Location = new System.Drawing.Point(6, 51);
-            this.grid_thongkesolanditour.MultiSelect = false;
-            this.grid_thongkesolanditour.Name = "grid_thongkesolanditour";
-            this.grid_thongkesolanditour.ReadOnly = true;
-            this.grid_thongkesolanditour.RowHeadersVisible = false;
-            this.grid_thongkesolanditour.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid_thongkesolanditour.Size = new System.Drawing.Size(1127, 563);
-            this.grid_thongkesolanditour.TabIndex = 12;
+            this.btn_timkiemNhanVien.Location = new System.Drawing.Point(575, 5);
+            this.btn_timkiemNhanVien.Name = "btn_timkiemNhanVien";
+            this.btn_timkiemNhanVien.Size = new System.Drawing.Size(116, 25);
+            this.btn_timkiemNhanVien.TabIndex = 9;
+            this.btn_timkiemNhanVien.Text = "Tìm kiếm";
+            this.btn_timkiemNhanVien.UseVisualStyleBackColor = true;
+            this.btn_timkiemNhanVien.Click += new System.EventHandler(this.btn_timkiemNhanVien_Click);
+            // 
+            // txt_timkiemNhanVien
+            // 
+            this.txt_timkiemNhanVien.Location = new System.Drawing.Point(3, 6);
+            this.txt_timkiemNhanVien.Multiline = true;
+            this.txt_timkiemNhanVien.Name = "txt_timkiemNhanVien";
+            this.txt_timkiemNhanVien.Size = new System.Drawing.Size(566, 24);
+            this.txt_timkiemNhanVien.TabIndex = 8;
+            // 
+            // btn_timkiemKhachHang
+            // 
+            this.btn_timkiemKhachHang.Location = new System.Drawing.Point(577, 7);
+            this.btn_timkiemKhachHang.Name = "btn_timkiemKhachHang";
+            this.btn_timkiemKhachHang.Size = new System.Drawing.Size(116, 25);
+            this.btn_timkiemKhachHang.TabIndex = 20;
+            this.btn_timkiemKhachHang.Text = "Tìm kiếm";
+            this.btn_timkiemKhachHang.UseVisualStyleBackColor = true;
+            this.btn_timkiemKhachHang.Click += new System.EventHandler(this.btn_timkiemKhachHang_Click);
+            // 
+            // txt_timkiemKhachHang
+            // 
+            this.txt_timkiemKhachHang.Location = new System.Drawing.Point(5, 8);
+            this.txt_timkiemKhachHang.Multiline = true;
+            this.txt_timkiemKhachHang.Name = "txt_timkiemKhachHang";
+            this.txt_timkiemKhachHang.Size = new System.Drawing.Size(566, 24);
+            this.txt_timkiemKhachHang.TabIndex = 19;
+            // 
+            // btn_timkiemTour
+            // 
+            this.btn_timkiemTour.Location = new System.Drawing.Point(569, 5);
+            this.btn_timkiemTour.Name = "btn_timkiemTour";
+            this.btn_timkiemTour.Size = new System.Drawing.Size(119, 25);
+            this.btn_timkiemTour.TabIndex = 29;
+            this.btn_timkiemTour.Text = "Tìm kiếm";
+            this.btn_timkiemTour.UseVisualStyleBackColor = true;
+            this.btn_timkiemTour.Click += new System.EventHandler(this.btn_timkiemTour_Click);
+            // 
+            // txt_timkiemTour
+            // 
+            this.txt_timkiemTour.Location = new System.Drawing.Point(0, 6);
+            this.txt_timkiemTour.Multiline = true;
+            this.txt_timkiemTour.Name = "txt_timkiemTour";
+            this.txt_timkiemTour.Size = new System.Drawing.Size(563, 24);
+            this.txt_timkiemTour.TabIndex = 28;
             // 
             // Main2
             // 
@@ -2100,6 +2170,7 @@
             this.panel9.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.tabControl3.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -2118,6 +2189,7 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.tabPage9.ResumeLayout(false);
+            this.tabPage9.PerformLayout();
             this.panel20.ResumeLayout(false);
             this.panel20.PerformLayout();
             this.panel19.ResumeLayout(false);
@@ -2132,6 +2204,7 @@
             this.panel10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_qlNhanVien)).EndInit();
             this.tabPage10.ResumeLayout(false);
+            this.tabPage10.PerformLayout();
             this.panel27.ResumeLayout(false);
             this.panel27.PerformLayout();
             this.panel21.ResumeLayout(false);
@@ -2163,11 +2236,11 @@
             this.panel31.ResumeLayout(false);
             this.panel31.PerformLayout();
             this.tabPage13.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grid_thongkesolanditour)).EndInit();
             this.panel34.ResumeLayout(false);
             this.panel34.PerformLayout();
             this.panel35.ResumeLayout(false);
             this.panel35.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grid_thongkesolanditour)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2244,16 +2317,16 @@
         private System.Windows.Forms.ComboBox comboBox_loaiChiPhi;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btn_ThemKhachHang;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button btn_timkiemKhachHangTrongDoan;
+        private System.Windows.Forms.TextBox txt_timkiemKhachHangTrongDoan;
         private System.Windows.Forms.DataGridView grid_dsKhachHang;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.Button btn_timkiemDoan;
+        private System.Windows.Forms.TextBox txt_timkiemDoan;
         private System.Windows.Forms.Button btn_XoaKhachHang;
         private System.Windows.Forms.Button btn_XoaNhanVien;
         private System.Windows.Forms.Button btn_ThemNhanVien;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button btn_timkiemNhanVienTrongDoan;
+        private System.Windows.Forms.TextBox txt_timkiemNhanVienTrongDoan;
         private System.Windows.Forms.DataGridView grid_dsNhanVien;
         private System.Windows.Forms.DataGridView grid_dsDoan;
         private System.Windows.Forms.Button btn_XoaDoan;
@@ -2345,5 +2418,11 @@
         private System.Windows.Forms.DateTimePicker datetime_bdThongkesolandi;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.DataGridView grid_thongkesolanditour;
+        private System.Windows.Forms.Button btn_timkiemNhanVien;
+        private System.Windows.Forms.TextBox txt_timkiemNhanVien;
+        private System.Windows.Forms.Button btn_timkiemKhachHang;
+        private System.Windows.Forms.TextBox txt_timkiemKhachHang;
+        private System.Windows.Forms.Button btn_timkiemTour;
+        private System.Windows.Forms.TextBox txt_timkiemTour;
     }
 }

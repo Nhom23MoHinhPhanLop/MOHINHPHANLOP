@@ -19,6 +19,7 @@ namespace QuanLyTour.BUS
         TourBUS tour;
         public DoanBUS()
         {
+            tenDoan = "";
             dsNhanVien = new List<NhanVienBUS>();
             dsKhachHang = new List<KhachHangBUS>();
             dsChiPhi = new List<ChiPhiBUS>();
@@ -35,20 +36,22 @@ namespace QuanLyTour.BUS
         public TourBUS Tour { get => tour; set => tour = value; }
 
 
-        public override bool Equals(object obj)
-        {
-            return obj.ToString() == this.ToString();
-        }
-
         public override string ToString()
         {
-            return MaDoan;
+            return this.TenDoan;
         }
 
-        public List<NhanVienBUS> getNhanVienKhongCoDoan()
+        public override bool Equals(object obj)
         {
-            return NhanVienDAO.getNhanVienKhongCoDoan(this);
+            return base.Equals(obj);
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+       
         public bool XoaNhanVien(NhanVienBUS nhanvien)
         {
             return nhanvien.XoaKhoiDoan(this);

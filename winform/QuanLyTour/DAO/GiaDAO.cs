@@ -45,7 +45,7 @@ namespace QuanLyTour.DAO
         {
             GiaBUS gia = new GiaBUS();
             Connection connection = new Connection();
-            using (SqlCommand command = new SqlCommand("proc_getCurrentPrice", connection.getConnection()))
+            using (SqlCommand command = new SqlCommand("proc_getGiaHienTai", connection.getConnection()))
             {
 
                 connection.open();
