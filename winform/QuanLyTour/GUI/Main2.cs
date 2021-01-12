@@ -604,7 +604,7 @@ namespace QuanLyTour.GUI
 
                 //Lấy chi phí từ giao diện
                 ChiPhiBUS chiphi = getChiPhi();
-                if (chiphi.Thoigian < doan.NgayBatDau || chiphi.Thoigian > doan.NgayKetThuc)
+                if ((chiphi.Thoigian.Date < doan.NgayBatDau.Date) || (chiphi.Thoigian.Date > doan.NgayKetThuc.Date))
                     MessageBox.Show("Ngoài thời gian của đoàn", "Thông báo");
                 else if (doan.ThemChiPhi(chiphi))
                 {

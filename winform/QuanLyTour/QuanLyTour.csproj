@@ -122,6 +122,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DAO\database2.sql" />
     <None Include="bin\Debug\fast-backward.png" />
     <None Include="bin\Debug\fast-forward.png" />
     <Content Include="DAO\database.sql" />

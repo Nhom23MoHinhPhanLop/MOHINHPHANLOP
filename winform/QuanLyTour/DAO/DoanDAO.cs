@@ -80,7 +80,7 @@ namespace QuanLyTour.DAO
 
                 connect.open();
 
-                var reader = command.ExecuteReader();
+                var reader =     command.ExecuteReader();
                 reader.Read();
                 result = int.Parse(reader["counts"].ToString());
 
